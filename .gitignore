@@ -58,3 +58,5 @@ target/
 # Sublime
 *.sublime-project
 *.sublime-workspace
+
+.idea
