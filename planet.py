@@ -3,7 +3,7 @@ import pygame
 planetImgs = [pygame.image.load("planet.png")]
 
 class Planet:
-    def __init__(self, x, y, type, amount):
+    def __init__(self, x, y, type):
         self.x = x
         self.y = y
         self.type = type
@@ -15,5 +15,3 @@ class Planet:
 
     def get_coords(self):
         return (self.x, self.y)
-
-    def get
