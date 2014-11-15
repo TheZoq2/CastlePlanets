@@ -53,6 +53,9 @@ class GUIImage(GUIElement):
 
         renderer.draw(self.image, self.truePos, True)
 
+    def setSize(self, size):
+        self.image = pygame.transform.scale(self.image, size.getTuple())
+
 
 class Button(GUIElement):
 
