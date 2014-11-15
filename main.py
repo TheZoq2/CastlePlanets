@@ -86,7 +86,9 @@ while running:
 
         if event.type == MOUSEBUTTONDOWN and event.button == 1:
             for planet in planets:
-                if planet.wasClicked(mousePos):
+                planet_screen_pos = planet.get_coords() - renderer.camera
+                diff = mouseVec - planet_screen_pos
+                if diff.getLen() <= 128:
                     selection = planet
 
     # Update objects

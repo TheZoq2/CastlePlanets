@@ -35,13 +35,11 @@ class Planet:
                 self.resources[type] = 0
             self.resources = {str(self.type): 100 * random.randint(1,5)}
 
-
-
     def get_coords(self):
         return self.pos
 
     def draw(self, renderer):
-        renderer.draw(PlanetImgs[random.randint(0, 4)], self.pos)
+        renderer.draw(PlanetImgs[types.index(self.type)], self.pos)
 
     def generate_type(self, types):
         return types[random.randint(0, 2)]
