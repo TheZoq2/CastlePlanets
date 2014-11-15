@@ -17,10 +17,9 @@ routes = []
 
 guiElements = []
 #guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
-testWindow = Window(Vec2(0, 0), Vec2(0, 500), "testWindow.png")
-guiElements.append(testWindow)
-testWindow2 = Window(Vec2(0, 0), Vec2(980, 0), "testWindow2.png")
-guiElements.append(testWindow2)
+guiElements.appenend(Window(Vec2(0, 0), Vec2(0, 500), "testWindow.png"))
+#guiElements.append(testWindow)
+guiElements.apend(Window(Vec2(0, 0), Vec2(980, 0), "testWindow2.png"))
 
 testWindow.addChild(Button(Vec2(100, 300), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
 testWindow2.addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
