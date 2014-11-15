@@ -25,7 +25,7 @@ class Planet:
         self.traderoutes = traderoutes
         self.population = population
         if self.name == None:
-            self.name = names[random.randint(0, 109)]
+            self.name = random.choice(names)
         if self.type == None:
             self.type = self.generate_type(types)
         if self.size == None:
