@@ -1,4 +1,5 @@
 import pygame, enum
+from Vec2 import *
 
 rocketImg = pygame.image.load("rocket.png")
 
@@ -21,9 +22,14 @@ class Rocket:
                 self.progress = 0
                 self.dir *= -1
 
-    def draw(self, screen, camera):
+    def get_image(self):
+        return rocketImg
+
+    #def draw(self, screen, camera):
+    def get_coords(self):
         if self.route == None:
-            screen.blit(rocketImg, (self.planet.x - camera.x, self.planet.y - camera.y))
+            #screen.blit(rocketImg, (self.planet.x - camera.x, self.planet.y - camera.y))
+            return self.planet.get_coords()
         else:
             p1 = self.route.path[0]
             p2 = self.route.path[1]
@@ -36,5 +42,6 @@ class Rocket:
             else:
                 pos = p2.x + difx * self.progress, p2.y - dify * self.progress
 
-            screen.blit(rocketImg, (pos[0] - camera.x, pos[1] - camera.y))
+            return Vec2(pos[0], pos[1])
+            #screen.blit(rocketImg, (pos[0] - camera.x, pos[1] - camera.y))
 
