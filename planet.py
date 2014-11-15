@@ -15,7 +15,6 @@ with open('planetnames.txt', 'r') as n:
     for line in n:
         names.append(line)
 
-
 class Planet:
     def __init__(self, name, pos, type, size, resources, population):
         self.name = name
@@ -63,7 +62,7 @@ class Planet:
         for type in types:
             res += self.resources[type]
             
-        if self.size * 10000 - self.all_resources() < amount
+        if self.size * 10000 - self.all_resources() < amount:
             self.resources[type] += amount - self.size * 10000 + self.all_resources()
             return amount - self.size * 10000 + self.all_resources()
         else:
