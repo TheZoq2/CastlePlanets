@@ -24,10 +24,10 @@ class Rocket:
 
     def draw(self, renderer):
         if self.route == None:
-            return self.planet.get_coords()
+            renderer.draw(rocketImg, self.planet.get_coords())
         else:
-            p1 = self.route.path[0]
-            p2 = self.route.path[1]
+            p1 = self.route.path[0].get_coords()
+            p2 = self.route.path[1].get_coords()
 
             difx = abs(p1.x - p2.x)
             dify = abs(p1.y - p2.y)
