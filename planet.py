@@ -62,15 +62,10 @@ class Planet:
         res = 0
         for type in types:
             res += self.resources[type]
-<<<<<<< HEAD
+            
         if self.size * 10000 - self.all_resources() < amount
             self.resources[type] += amount - self.size * 10000 + self.all_resources()
             return amount - self.size * 10000 + self.all_resources()
-=======
-        if self.size * 10000 - res < amount:
-            self.resources[type] += amount - self.size * 10000 + res
-            return amount - self.size * 10000 + res
->>>>>>> 536f64e06c87b2cf8d655f86327def5933f44339
         else:
             self.resources[type] += amount
             return amount
