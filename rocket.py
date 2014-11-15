@@ -25,10 +25,8 @@ class Rocket:
     def get_image(self):
         return rocketImg
 
-    #def draw(self, screen, camera):
     def get_coords(self):
         if self.route == None:
-            #screen.blit(rocketImg, (self.planet.x - camera.x, self.planet.y - camera.y))
             return self.planet.get_coords()
         else:
             p1 = self.route.path[0]
@@ -43,5 +41,4 @@ class Rocket:
                 pos = p2.x + difx * self.progress, p2.y - dify * self.progress
 
             return Vec2(pos[0], pos[1])
-            #screen.blit(rocketImg, (pos[0] - camera.x, pos[1] - camera.y))
 

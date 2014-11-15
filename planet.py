@@ -9,9 +9,6 @@ class Planet:
         self.y = y
         self.type = type
 
-    #def draw(self, screen, camera):
-    #    screen.blit(planetImgs[self.type], (self.x, self.y) - camera)
-
     def get_image(self):
         return planetImgs[self.type]
 

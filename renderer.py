@@ -17,6 +17,8 @@ class Renderer:
 
     def draw(self, obj):
         pos = obj.get_coords() - self.camera
+        pos += Vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         img = obj.get_image()
+        pos -= Vec2(img.get_width() / 2, img.get_height() / 2)
         self.screen.blit(img, (pos.x, pos.y))
 

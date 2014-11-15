@@ -9,7 +9,7 @@ from renderer import *
 pygame.init()
 clock = pygame.time.Clock()
 
-planets = [Planet(640, 350, 0), Planet(800, 200, 0)]
+planets = [Planet(0, 0, 0), Planet(100, -200, 0)]
 rockets = [Rocket(planets[0])]
 routes = [Traderoute([planets[1], planets[0]])]
 
@@ -55,14 +55,12 @@ while running:
 
     # Draw shit
     for planet in planets:
-        #planet.draw(screen, camera)
         renderer.draw(planet)
 
     for traderoute in routes:
         pass
 
     for rocket in rockets:
-        #rocket.draw(screen, camera)
         renderer.draw(rocket)
 
     pygame.display.flip()
