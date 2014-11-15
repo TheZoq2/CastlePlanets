@@ -50,3 +50,23 @@ class Planet:
 
     def update(self):
         pass
+
+    def add_resources(self, type, amount):
+        res = 0
+        for type in types:
+            res += self.resources[type]
+        if self.size * 10000 - res < amount
+            self.resources[type] += amount - self.size * 10000 + res
+            return amount - self.size * 10000 + res
+        else:
+            self.resources[type] += amount
+            return amount
+
+    def get_resources(self, type, amount):
+        if self.resources[type] >= amount:
+            self.resources[type] -= amount
+            return amount
+        else:
+            res = self.resources[type]
+            self.resources[type] = 0
+            return res
