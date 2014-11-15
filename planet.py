@@ -50,8 +50,8 @@ class Planet:
         return types[random.randint(0, 2)]
 
     def update(self):
-        if self.all_resources() + self.population >= self.size * 10000:
-            self.resources[self.type] = self.size * 10000 - self.all_resources()
+        if self.all_resources() + self.population >= int(self.size * 10000):
+            self.resources[self.type] = int(self.size * 10000) - self.all_resources()
         else:
             self.resources[self.type] += self.population
 
@@ -60,9 +60,9 @@ class Planet:
         for type in types:
             res += self.resources[type]
             
-        if self.size * 10000 - self.all_resources() < amount:
-            self.resources[type] += amount - self.size * 10000 + self.all_resources()
-            return amount - self.size * 10000 + self.all_resources()
+        if int(self.size * 10000) - self.all_resources() < amount:
+            self.resources[type] += amount - int(self.size * 10000) + self.all_resources()
+            return amount - int(self.size * 10000) + self.all_resources()
         else:
             self.resources[type] += amount
             return amount
