@@ -3,12 +3,9 @@ from pygame.locals import *
 from planet import *
 from trade import *
 from rocket import *
-<<<<<<< HEAD
 from gui import *
-=======
 from Vec2 import *
 from renderer import *
->>>>>>> 097617c12c5ecd133bc74c63a36d69174a827933
 
 pygame.init()
 clock = pygame.time.Clock()
