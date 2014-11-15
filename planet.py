@@ -9,8 +9,6 @@ class Planet:
         self.y = y
         self.type = type
 
-    def get_image(self):
-        return planetImgs[self.type]
+    def draw(self, renderer):
+        renderer.draw(planetImgs[self.type], Vec2(self.x, self.y))
 
-    def get_coords(self):
-        return Vec2(self.x, self.y)
