@@ -8,28 +8,28 @@ PlanetImgs += [pygame.image.load("Planets/Earth.png")]
 
 print(PlanetImgs)
 
-types = ["Food", "Wood", "Iron"]
+# Nothing should be changed
+types = ["Food", "Wood", "Iron", "Nothing", "Nothing2", "Earth"]
 with open('planetnames.txt', 'r') as n:
     names = []
     for line in n:
-        names += [line]
+        names.append(line)
 
 
 class Planet:
-    def __init__(self, name, pos, type, size, resources, traderoutes, population):
+    def __init__(self, name, pos, type, size, resources, population):
         self.name = name
         self.pos = pos
         self.type = type
         self.size = size
         self.resources = resources
-        self.traderoutes = traderoutes
         self.population = population
         if self.name == None:
             self.name = names[random.randint(0, 109)]
         if self.type == None:
             self.type = self.generate_type(types)
         if self.size == None:
-            self.size = random.randint(1, 10) / 10
+            self.size = random.uniform(0.1, 0.7)
         if self.resources == None:
             self.resources = {}
             for type in types:
@@ -40,10 +40,8 @@ class Planet:
         return self.pos
 
     def draw(self, renderer):
-        if self.type == "Earth":
-            renderer.draw(PlanetImgs[5], self.pos)
-        else:
-            renderer.draw(PlanetImgs[types.index(self.type)], self.pos)
+        img = PlanetImgs[types.index(self.type)]
+        renderer.draw(pygame.transform.scale(img, (int(img.get_width() * self.size), int(img.get_height() * self.size))), self.pos)
 
     def generate_type(self, types):
         return types[random.randint(0, 2)]
