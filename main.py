@@ -41,6 +41,7 @@ mouseVec = Vec2(0,0)
 mouseClicks = (False, False, False)
 
 background = pygame.image.load("Background.png")
+glow = pygame.image.load("selection.png")
 framerate = 50
 running = True
 yscroll = 0
@@ -48,6 +49,7 @@ xscroll = 0
 renderer = Renderer()
 cameraSpeed = 800 # in pixels per second
 dt = 1 / framerate
+selection = planets[0]
 while running:
     renderer.clear()
     renderer.draw(background, Vec2(0,0), True)
@@ -81,6 +83,11 @@ while running:
             elif event.key == K_d:
                 xscroll -= 1
 
+        if event.type == MOUSEBUTTONDOWN and event.button == 1:
+            for planet in planets:
+                if planet.wasClicked(mousePos):
+                    selection = planet
+
     # Update objects
     for rocket in rockets:
         rocket.update(dt)
@@ -90,6 +97,9 @@ while running:
     # Draw shit
     for traderoute in routes:
         traderoute.draw(renderer)
+
+    if selection != None:
+        renderer.draw(glow, selection.get_coords())
 
     for planet in planets:
         planet.draw(renderer)
