@@ -15,7 +15,7 @@ class Rocket:
         if self.route:
             diff = self.target.get_coords() - self.pos
 
-            if diff.getLen() <= 5:
+            if diff.getLen() <= 40:
                 if self.target == self.route.path[0]:
                     self.target = self.route.path[1]
                 else:
