@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 from pygame.locals import *
 from planet import *
 from trade import *
@@ -10,15 +10,21 @@ from renderer import *
 pygame.init()
 clock = pygame.time.Clock()
 
-planets = [Planet(0, 0, 0), Planet(100, -200, 0)]
+planets = [Planet(Vec2(0, 0), 0)]
 rockets = [Rocket(planets[0])]
-routes = [Traderoute([planets[1], planets[0]])]
-
-rockets[0].route = routes[0]
 
 guiElements = []
 guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
 
+# Generate planets
+for x in range(-10, 10):
+    for y in range(-10, 10):
+        if (x != 0 or y != 0) and random.randint(0, 4) > 0:
+            offset = Vec2(random.randint(-90, 90), random.randint(-90, 90))
+            planets.append(Planet(Vec2(x, y) * 300 + offset, 0))
+
+routes = [Traderoute([planets[1], planets[0]])]
+#rockets[0].route = routes[0]
 
 mousePos = (0, 0)
 mouseVec = Vec2(0,0)

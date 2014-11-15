@@ -41,7 +41,7 @@ class Button(GUIElement):
 
     def __init__(self, parentPos, pos, imageNames):
         super(GUIElement, self).__init__()
-        
+
         #loading images
         for i in imageNames:
             image = pygame.image.load(i)
