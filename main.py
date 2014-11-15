@@ -6,6 +6,7 @@ from rocket import *
 from gui import *
 from Vec2 import *
 from renderer import *
+import pdb
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -16,12 +17,17 @@ routes = []
 
 guiElements = []
 #guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
-guiElements.append(Window(Vec2(0, 0), Vec2(100, 100), "testWindow.png"))
-guiElements[0].addChild(Button(Vec2(100, 300), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
-guiElements[0].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
-guiElements[0].addChild(GUIImage(Vec2(100, 300), Vec2(150, 10), "testHover.png"))
+testWindow = Window(Vec2(0, 0), Vec2(0, 500), "testWindow.png")
+guiElements.append(testWindow)
+testWindow2 = Window(Vec2(0, 0), Vec2(980, 0), "testWindow2.png")
+guiElements.append(testWindow2)
+
+testWindow.addChild(Button(Vec2(100, 300), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
+testWindow2.addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
+#guiElements[0].addChild(GUIImage(Vec2(100, 300), Vec2(150, 10), "testHover.png"))
 #guiElements[0].addChild(GUIImage(Vec2(200, 100), Vec2(200, 10), "Hello world"))
 
+print(guiElements)
 
 
 # Generate planets
