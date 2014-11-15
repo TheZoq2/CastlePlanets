@@ -43,6 +43,7 @@ mouseClicks = (False, False, False)
 
 background = pygame.image.load("Background.png")
 glow = pygame.image.load("selection.png")
+glow = pygame.transform.scale(glow, (350, 350))
 framerate = 50
 running = True
 yscroll = 0
@@ -54,8 +55,6 @@ dt = 1 / framerate
 selection = planets[0]
 
 while running:
-    dt = 1 / framerate
-    
     renderer.clear()
     renderer.draw(background, Vec2(0,0), True)
     mousePos = pygame.mouse.get_pos()
@@ -69,26 +68,23 @@ while running:
 
         if event.type == KEYDOWN:
             if event.key == K_w:
-                yscroll -= 1
+                yscroll = -1
             elif event.key == K_s:
-                yscroll += 1
+                yscroll = 1
             elif event.key == K_a:
-                xscroll -= 1
+                xscroll = -1
             elif event.key == K_d:
-                xscroll += 1
+                xscroll = 1
         if event.type == KEYUP:
-            if event.key == K_w:
-                yscroll += 1
-            elif event.key == K_s:
-                yscroll -= 1
-            elif event.key == K_a:
-                xscroll += 1
-            elif event.key == K_d:
-                xscroll -= 1
+            if event.key == K_w or event.key == K_s:
+                yscroll = 0
+            elif event.key == K_a or event.key == K_d:
+                xscroll = 0
 
         if event.type == MOUSEBUTTONDOWN and event.button == 1:
             for planet in planets:
                 planet_screen_pos = planet.get_coords() - renderer.camera
+                planet_screen_pos += Vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
                 diff = mouseVec - planet_screen_pos
                 if diff.getLen() <= 128:
                     selection = planet
@@ -118,5 +114,5 @@ while running:
         element.draw(renderer)
 
     pygame.display.flip()
-    clock.tick(framerate)
+    dt = clock.tick(framerate) / 1000
 
