@@ -34,6 +34,9 @@ class Planet:
         for type in types:
             self.resources[type] = 0
 
+        img = PlanetImgs[types.index(self.type)]
+        self.img = pygame.transform.scale(img, (int(img.get_width() * self.size), int(img.get_height() * self.size)))
+
     def get_coords(self):
         return self.pos
 
@@ -44,8 +47,7 @@ class Planet:
         return res
 
     def draw(self, renderer):
-        img = PlanetImgs[types.index(self.type)]
-        renderer.draw(pygame.transform.scale(img, (int(img.get_width() * self.size), int(img.get_height() * self.size))), self.pos)
+        renderer.draw(self.img, self.pos)
 
     def generate_type(self, types):
         return types[random.randint(0, 2)]
