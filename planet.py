@@ -15,47 +15,73 @@ with open('planetnames.txt', 'r') as n:
     for line in n:
         names.append(line)
 
-
 class Planet:
-    def __init__(self, name, pos, type, size, resources, population):
+    def __init__(self, name, pos, type, size, population, ownage):
         self.name = name
         self.pos = pos
         self.type = type
         self.size = size
-        self.resources = resources
         self.population = population
+        self.ownage = ownage
         if self.name == None:
-            self.name = names[random.randint(0, 109)]
+            self.name = random.choice(names)
         if self.type == None:
             self.type = self.generate_type(types)
         if self.size == None:
             self.size = random.uniform(0.1, 0.7)
-        if self.resources == None:
-            self.resources = {}
-            for type in types:
-                self.resources[type] = 0
-            self.resources = {str(self.type): 100 * random.randint(1,5)}
+        if self.ownage == None:
+            self.ownage = False
+
+        self.resources = {}
+        for type in types:
+            self.resources[type] = 0
+
+        img = PlanetImgs[types.index(self.type)]
+        self.img = pygame.transform.scale(img, (int(img.get_width() * self.size), int(img.get_height() * self.size)))
+
+        self.timer = 0
 
     def get_coords(self):
         return self.pos
 
+    def all_resources(self):
+        res = 0
+        for type in types:
+            res += self.resources[type]
+        return res
+
     def draw(self, renderer):
-        img = PlanetImgs[types.index(self.type)]
-        renderer.draw(pygame.transform.scale(img, (int(img.get_width() * self.size), int(img.get_height() * self.size))), self.pos)
+        renderer.draw(self.img, self.pos)
 
     def generate_type(self, types):
         return types[random.randint(0, 2)]
 
-    def update(self):
-        pass
+    def population_growth(self):
+        if self.population <= self.resources["Food"]:
+            self.resources["Food"] -= self.population
+            self.population += self.population // 10
+        else:
+            self.population = self.resources["Food"]
+            self.resources["Food"] = 0
+
+
+    def update(self, dt):
+        if self.timer >= 1:
+            self.timer -= 1
+            self.population_growth()
+            if self.all_resources() + self.population >= int(self.size * 10000):
+                self.resources[self.type] = int(self.size * 10000) - self.all_resources()
+            else:
+                self.resources[self.type] += self.population
 
     def add_resources(self, type, amount):
         res = 0
         for type in types:
             res += self.resources[type]
-        if self.size * 10000 - res < amount:
-            self.resources[type] += amount - self.size * 10000 + res
-            return amount - self.size * 10000 + res
+            
+        if int(self.size * 10000) - self.all_resources() < amount:
+            self.resources[type] += amount - int(self.size * 10000) + self.all_resources()
+            return amount - int(self.size * 10000) + self.all_resources()
         else:
             self.resources[type] += amount
             return amount
@@ -68,3 +94,6 @@ class Planet:
             res = self.resources[type]
             self.resources[type] = 0
             return res
+
+    def claim(self):
+        self.ownage = True
