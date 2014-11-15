@@ -39,6 +39,12 @@ class Planet:
     def get_coords(self):
         return self.pos
 
+    def all_resources(self):
+        res = 0
+        for type in types:
+            res += self.resources[type]
+        return res
+
     def draw(self, renderer):
         if self.type == "Earth":
             renderer.draw(PlanetImgs[5], self.pos)
@@ -49,15 +55,18 @@ class Planet:
         return types[random.randint(0, 2)]
 
     def update(self):
-        pass
+        if self.all_resources() + self.population >= self.size * 10000:
+            self.resources[self.type] = self.size * 10000 - self.all_resources()
+        else:
+            self.resources[self.type] += self.population
 
     def add_resources(self, type, amount):
         res = 0
         for type in types:
             res += self.resources[type]
-        if self.size * 10000 - res < amount
-            self.resources[type] += amount - self.size * 10000 + res
-            return amount - self.size * 10000 + res
+        if self.size * 10000 - self.all_resources() < amount
+            self.resources[type] += amount - self.size * 10000 + self.all_resources()
+            return amount - self.size * 10000 + self.all_resources()
         else:
             self.resources[type] += amount
             return amount
