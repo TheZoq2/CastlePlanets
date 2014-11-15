@@ -25,7 +25,12 @@ class Vec2:
     def __init__(self):
         self.x = 0
         self.y = 0
-    def __init__(self, x, y):
+    def __init__(self, x, y=None):
+        if(isinstance(x, tuple)):
+            self.x = x[0]
+            self.y = x[1]
+            return
+
         self.x = x
         self.y = y
 
@@ -61,6 +66,11 @@ class Vec2:
     def getAngle(self):
         return math.atan2(self.y, self.x)
 
+    def __le__(self, other):
+        return self.x <= other.x and self.y <= other.y
+    def __ge__(self, other):
+        return self.x >= other.x and self.y >= other.y
+
 
 if __name__ == "__main__":
     vec1 = Vec2(2.0, 1.0)
@@ -70,3 +80,5 @@ if __name__ == "__main__":
     print("Sub ", vec1 - vec2)
     print("Add ", vec1 + vec2)
     print("Div ", vec1 / 2)
+    print("GT ", vec1 >= vec2)
+    print("lt", vec1 <= vec2)
