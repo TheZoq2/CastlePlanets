@@ -24,7 +24,7 @@ class GUIElement:
     def setPos(self, pos):
         self.pos = pos
 
-    def draw(self, screen):
+    def draw(self, renderer):
         pass
     
     #Mouse pos is Vec2, mouseClicks is a tupple of mouse button states
@@ -69,8 +69,8 @@ class Button(GUIElement):
             self.state = BUTTON_DEFAULT
 
     
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, renderer):
+        super().draw(renderer)
         
         currentImage = self.images[0]
         if(self.state == BUTTON_CLICK_START):
@@ -78,7 +78,7 @@ class Button(GUIElement):
         if(self.state == BUTTON_HOVER):
             currentImage = self.images[2]
 
-        screen.blit(currentImage, (self.pos.x, self.pos.y))
+        renderer.draw(currentImage, self.pos, True)
     
     def setOnClick(self, func):
         self.onClick = func

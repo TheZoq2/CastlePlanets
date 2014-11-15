@@ -22,10 +22,7 @@ class Rocket:
                 self.progress = 0
                 self.dir *= -1
 
-    def get_image(self):
-        return rocketImg
-
-    def get_coords(self):
+    def draw(self, renderer):
         if self.route == None:
             return self.planet.get_coords()
         else:
@@ -40,5 +37,5 @@ class Rocket:
             else:
                 pos = p2.x + difx * self.progress, p2.y - dify * self.progress
 
-            return Vec2(pos[0], pos[1])
+            renderer.draw(rocketImg, Vec2(pos[0], pos[1]))
 

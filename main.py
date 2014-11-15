@@ -70,17 +70,17 @@ while running:
 
     # Draw shit
     for planet in planets:
-        renderer.draw(planet)
+        planet.draw(renderer)
 
     for traderoute in routes:
         pass
 
     for rocket in rockets:
-        renderer.draw(rocket)
+        rocket.draw(renderer)
 
     for element in guiElements:
         element.update(mouseVec, mouseClicks)
-        element.draw(screen)
+        element.draw(renderer)
 
     pygame.display.flip()
     clock.tick(framerate)
