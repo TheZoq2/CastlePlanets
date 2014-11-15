@@ -39,6 +39,20 @@ class GUIElement:
     def calcTruePos(self):
         self.truePos = self.pos + self.parentPos
 
+class GUIImage(GUIElement):
+    image = None
+
+    def __init__(self, parentPos, pos, imageFile):
+        super().__init__(parentPos, pos)
+
+        self.image = pygame.image.load(imageFile)
+
+    def draw(self, renderer):
+        super().draw(renderer)
+
+        renderer.draw(self.image, self.truePos, True)
+
+
 class Button(GUIElement):
     state = 0
     images = []
@@ -88,6 +102,8 @@ class Button(GUIElement):
     
     def setOnClick(self, func):
         self.onClick = func
+
+            
 
 class Window(GUIElement):
     background = None

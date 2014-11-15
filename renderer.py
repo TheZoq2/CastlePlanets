@@ -24,3 +24,10 @@ class Renderer:
             pos -= Vec2(img.get_width() / 2, img.get_height() / 2)
             self.screen.blit(img, (pos.x, pos.y))
 
+    def line(self, start, end):
+        start -= self.camera
+        end -= self.camera
+        start += Vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        end += Vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        pygame.draw.line(self.screen, (255, 255, 255), (start.x, start.y), (end.x, end.y))
+
