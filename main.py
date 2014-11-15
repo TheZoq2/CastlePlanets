@@ -66,6 +66,8 @@ while running:
                 xscroll -= 1
             elif event.key == K_d:
                 xscroll += 1
+            elif event.key == K_SPACE:
+                renderer.camera = Vec2(0,0)
         if event.type == KEYUP:
             if event.key == K_w:
                 yscroll += 1
@@ -83,11 +85,11 @@ while running:
     renderer.move_camera(Vec2(xscroll, yscroll) * dt * cameraSpeed)
 
     # Draw shit
+    for traderoute in routes:
+        traderoute.draw(renderer)
+
     for planet in planets:
         planet.draw(renderer)
-
-    for traderoute in routes:
-        pass
 
     for rocket in rockets:
         rocket.draw(renderer)
