@@ -19,6 +19,9 @@ guiElements = []
 guiElements.append(Window(Vec2(0, 0), Vec2(100, 100), "testWindow.png"))
 guiElements[0].addChild(Button(Vec2(100, 300), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
 guiElements[0].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
+guiElements[0].addChild(GUIImage(Vec2(100, 300), Vec2(150, 10), "testHover.png"))
+
+
 
 # Generate planets
 for x in range(-10, 10):
