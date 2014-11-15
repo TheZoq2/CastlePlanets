@@ -82,3 +82,17 @@ class Button(GUIElement):
     
     def setOnClick(self, func):
         self.onClick = func
+
+def Window(GUIElement):
+    background = None
+    size = Vec2(0, 0)
+
+    children = []
+
+    def __init__(self, parentPos, pos, backgroundName):
+        super(GUIElement, self).__init__()
+
+        self.background = pygame.image.load(backgroundName)
+
+    def addChild(child):
+        pass
