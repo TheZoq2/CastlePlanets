@@ -10,8 +10,8 @@ class Planet:
 
 
 
-    def draw(self, screen):
-        screen.blit(planetImgs[self.type], (self.x, self.y))
+    def draw(self, screen, camera):
+        screen.blit(planetImgs[self.type], (self.x - camera.x, self.y - camera.y))
 
     def get_coords(self):
         return (self.x, self.y)

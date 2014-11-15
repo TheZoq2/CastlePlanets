@@ -21,9 +21,9 @@ class Rocket:
                 self.progress = 0
                 self.dir *= -1
 
-    def draw(self, screen):
+    def draw(self, screen, camera):
         if self.route == None:
-            screen.blit(rocketImg, (self.planet.x, self.planet.y))
+            screen.blit(rocketImg, (self.planet.x - camera.x, self.planet.y - camera.y))
         else:
             p1 = self.route.path[0]
             p2 = self.route.path[1]
@@ -36,5 +36,5 @@ class Rocket:
             else:
                 pos = p2.x + difx * self.progress, p2.y - dify * self.progress
 
-            screen.blit(rocketImg, pos)
+            screen.blit(rocketImg, (pos[0] - camera.x, pos[1] - camera.y))
 

@@ -3,6 +3,7 @@ from pygame.locals import *
 from planet import *
 from trade import *
 from rocket import *
+from Vec2 import *
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 700))
@@ -16,25 +17,51 @@ rockets[0].route = routes[0]
 
 framerate = 50
 running = True
+yscroll = 0
+xscroll = 0
+camera = Vec2(0, 0)
+cameraSpeed = 400 # in pixels per second
 while running:
+    dt = 1 / framerate
     screen.fill((0, 0, 0))
     for event in pygame.event.get():
         if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
             running = False
 
+        if event.type == KEYDOWN:
+            if event.key == K_w:
+                yscroll -= 1
+            elif event.key == K_s:
+                yscroll += 1
+            elif event.key == K_a:
+                xscroll -= 1
+            elif event.key == K_d:
+                xscroll += 1
+        if event.type == KEYUP:
+            if event.key == K_w:
+                yscroll += 1
+            elif event.key == K_s:
+                yscroll -= 1
+            elif event.key == K_a:
+                xscroll += 1
+            elif event.key == K_d:
+                xscroll -= 1
+
     # Update objects
     for rocket in rockets:
-        rocket.update(1 / framerate)
+        rocket.update(dt)
+
+    camera += Vec2(xscroll * dt * cameraSpeed, yscroll * dt * cameraSpeed)
 
     # Draw shit
     for planet in planets:
-        planet.draw(screen)
+        planet.draw(screen, camera)
 
     for traderoute in routes:
         pass
 
     for rocket in rockets:
-        rocket.draw(screen)
+        rocket.draw(screen, camera)
 
     pygame.display.flip()
     clock.tick(framerate)
