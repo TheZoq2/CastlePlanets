@@ -10,7 +10,7 @@ from renderer import *
 pygame.init()
 clock = pygame.time.Clock()
 
-planets = [Planet(None, Vec2(0, 0), None, None, None, None, 0)]
+planets = [Planet("Earth", Vec2(0, 0), "Earth", None, None, None, 0)]
 rockets = [Rocket(planets[0])]
 routes = []
 
