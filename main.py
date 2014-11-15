@@ -12,6 +12,7 @@ clock = pygame.time.Clock()
 
 planets = [Planet(Vec2(0, 0), 0)]
 rockets = [Rocket(planets[0])]
+routes = []
 
 guiElements = []
 guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
@@ -19,12 +20,15 @@ guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.pn
 # Generate planets
 for x in range(-10, 10):
     for y in range(-10, 10):
-        if (x != 0 or y != 0) and random.randint(0, 4) > 0:
+        if (x != 0 or y != 0) and random.randint(0, 3) > 0:
             offset = Vec2(random.randint(-90, 90), random.randint(-90, 90))
-            planets.append(Planet(Vec2(x, y) * 300 + offset, 0))
+            planet = Planet(Vec2(x, y) * 300 + offset, 0)
+            planets.append(planet)
 
-routes = [Traderoute([planets[1], planets[0]])]
-#rockets[0].route = routes[0]
+            if abs(x) == 1 and abs(y) == 1: # Create a trade route to a planet close to earth
+                routes.append(Traderoute((planets[0], planet)))
+
+rockets[0].route = routes[0]
 
 mousePos = (0, 0)
 mouseVec = Vec2(0,0)
