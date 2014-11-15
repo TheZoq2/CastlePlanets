@@ -14,7 +14,7 @@ class Traderoute:
     def routable_planets(source_planet, planets):
         close_planets = []
         for planet in planets:
-            if getDistance(source_planet.get_coords(), planet.get_coords()):
+            if getDistance(source_planet.get_coords(), planet.get_coords() < 1000):
                 close_planets.append(planet)
 
         return close_planets

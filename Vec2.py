@@ -74,6 +74,9 @@ class Vec2:
     def __ge__(self, other):
         return self.x >= other.x and self.y >= other.y
 
+    def getTuple(self):
+        return (self.x, self.y)
+
 
 if __name__ == "__main__":
     vec1 = Vec2(2.0, 1.0)
