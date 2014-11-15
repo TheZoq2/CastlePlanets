@@ -20,6 +20,7 @@ guiElements.append(Window(Vec2(0, 0), Vec2(100, 100), "testWindow.png"))
 guiElements[0].addChild(Button(Vec2(100, 300), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
 guiElements[0].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
 guiElements[0].addChild(GUIImage(Vec2(100, 300), Vec2(150, 10), "testHover.png"))
+#guiElements[0].addChild(GUIImage(Vec2(200, 100), Vec2(200, 10), "Hello world"))
 
 
 
@@ -47,8 +48,9 @@ yscroll = 0
 xscroll = 0
 renderer = Renderer()
 cameraSpeed = 800 # in pixels per second
-dt = 1 / framerate
 while running:
+    dt = 1 / framerate
+    
     renderer.clear()
     renderer.draw(background, Vec2(0,0), True)
     mousePos = pygame.mouse.get_pos()
@@ -100,5 +102,5 @@ while running:
         element.draw(renderer)
 
     pygame.display.flip()
-    dt = clock.tick(framerate) / 1000
+    clock.tick(framerate)
 
