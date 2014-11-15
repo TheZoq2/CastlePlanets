@@ -10,9 +10,10 @@ from renderer import *
 pygame.init()
 clock = pygame.time.Clock()
 
-planets = [Planet(Vec2(0, 0), 0)]
+planets = [Planet(None, Vec2(0, 0), None, None, None, None, 0)]
 rockets = [Rocket(planets[0])]
 routes = []
+
 
 guiElements = []
 #guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
@@ -28,7 +29,7 @@ for x in range(-10, 10):
     for y in range(-10, 10):
         if (x != 0 or y != 0) and random.randint(0, 3) > 0:
             offset = Vec2(random.randint(-90, 90), random.randint(-90, 90))
-            planet = Planet(Vec2(x, y) * 300 + offset, 0)
+            planet = Planet(None, Vec2(x, y) * 300 + offset, None, None, None, None, 0)
             planets.append(planet)
 
             if abs(x) == 1 and abs(y) == 1: # Create a trade route to a planet close to earth
