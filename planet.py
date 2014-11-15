@@ -54,7 +54,12 @@ class Planet:
         return types[random.randint(0, 2)]
 
     def population_growth(self):
-        self.population += self.population // 10
+        if self.population <= self.resources["Food"]:
+            self.resources["Food"] -= self.population
+            self.population += self.population // 10
+        else:
+            self.population = self.resources["Food"]
+            self.resources["Food"] = 0
 
 
     def update(self, dt):
