@@ -4,6 +4,7 @@ from Vec2 import *
 PlanetImgs = []
 for i in range(5):
     PlanetImgs += [pygame.image.load("Planets/planet" + str(i+1) + ".png")]
+PlanetImgs += [pygame.image.load("Planets/Earth.png")]
 
 print(PlanetImgs)
 
@@ -28,7 +29,7 @@ class Planet:
         if self.type == None:
             self.type = self.generate_type(types)
         if self.size == None:
-            self.size = 10 * random.randint(1, 10)
+            self.size = random.randint(1, 10) / 10
         if self.resources == None:
             self.resources = {}
             for type in types:
@@ -39,7 +40,33 @@ class Planet:
         return self.pos
 
     def draw(self, renderer):
-        renderer.draw(PlanetImgs[types.index(self.type)], self.pos)
+        if self.type == "Earth":
+            renderer.draw(PlanetImgs[5], self.pos)
+        else:
+            renderer.draw(PlanetImgs[types.index(self.type)], self.pos)
 
     def generate_type(self, types):
         return types[random.randint(0, 2)]
+
+    def update(self):
+        pass
+
+    def add_resources(self, type, amount):
+        res = 0
+        for type in types:
+            res += self.resources[type]
+        if self.size * 10000 - res < amount
+            self.resources[type] += amount - self.size * 10000 + res
+            return amount - self.size * 10000 + res
+        else:
+            self.resources[type] += amount
+            return amount
+
+    def get_resources(self, type, amount):
+        if self.resources[type] >= amount:
+            self.resources[type] -= amount
+            return amount
+        else:
+            res = self.resources[type]
+            self.resources[type] = 0
+            return res
