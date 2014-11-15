@@ -17,12 +17,12 @@ routes = []
 
 guiElements = []
 #guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
-guiElements.appenend(Window(Vec2(0, 0), Vec2(0, 500), "testWindow.png"))
+guiElements.append(Window(Vec2(0, 0), Vec2(0, 500), "testWindow.png"))
 #guiElements.append(testWindow)
-guiElements.apend(Window(Vec2(0, 0), Vec2(980, 0), "testWindow2.png"))
+guiElements.append(Window(Vec2(0, 0), Vec2(980, 0), "testWindow2.png"))
 
-testWindow.addChild(Button(Vec2(100, 300), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
-testWindow2.addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
+guiElements[0].addChild(Button(Vec2(100, 300), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
+guiElements[1].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
 #guiElements[0].addChild(GUIImage(Vec2(100, 300), Vec2(150, 10), "testHover.png"))
 #guiElements[0].addChild(GUIImage(Vec2(200, 100), Vec2(200, 10), "Hello world"))
 
