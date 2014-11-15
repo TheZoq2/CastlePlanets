@@ -93,7 +93,7 @@ while running:
                 planet_screen_pos = planet.get_coords() - renderer.camera
                 planet_screen_pos += Vec2((SCREEN_WIDTH - 300) / 2, (SCREEN_HEIGHT - 200) / 2)
                 diff = mouseVec - planet_screen_pos
-                if diff.getLen() <= 128:
+                if diff.getLen() <= 128 * planet.size:
                     selection = planet
                     scale = Vec2(256, 256) * selection.size
                     #print(scale)
