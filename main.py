@@ -17,8 +17,10 @@ routes = [Traderoute([planets[1], planets[0]])]
 rockets[0].route = routes[0]
 
 guiElements = []
-guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
-
+#guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
+guiElements.append(Window(Vec2(0, 0), Vec2(100, 100), "testWindow.png"))
+guiElements[0].addChild(Button(Vec2(100, 300), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
+guiElements[0].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
 
 mousePos = (0, 0)
 mouseVec = Vec2(0,0)
