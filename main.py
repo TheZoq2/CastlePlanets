@@ -75,6 +75,8 @@ while running:
                 xscroll = -1
             elif event.key == K_d:
                 xscroll = 1
+            elif event.key == K_SPACE:
+                renderer.camera = Vec2(0, 0)
         if event.type == KEYUP:
             if event.key == K_w or event.key == K_s:
                 yscroll = 0
