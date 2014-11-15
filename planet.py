@@ -16,18 +16,21 @@ with open('planetnames.txt', 'r') as n:
         names.append(line)
 
 class Planet:
-    def __init__(self, name, pos, type, size, population):
+    def __init__(self, name, pos, type, size, population, ownage):
         self.name = name
         self.pos = pos
         self.type = type
         self.size = size
         self.population = population
+        self.ownage = ownage
         if self.name == None:
             self.name = random.choice(names)
         if self.type == None:
             self.type = self.generate_type(types)
         if self.size == None:
             self.size = random.uniform(0.1, 0.7)
+        if self.ownage == None:
+            self.ownage = False
 
         self.resources = {}
         for type in types:
@@ -91,3 +94,6 @@ class Planet:
             res = self.resources[type]
             self.resources[type] = 0
             return res
+
+    def claim(self):
+        self.ownage = True
