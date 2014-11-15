@@ -15,7 +15,6 @@ with open('planetnames.txt', 'r') as n:
     for line in n:
         names.append(line)
 
-
 class Planet:
     def __init__(self, name, pos, type, size, population):
         self.name = name
@@ -34,6 +33,11 @@ class Planet:
         for type in types:
             self.resources[type] = 0
 
+        img = PlanetImgs[types.index(self.type)]
+        self.img = pygame.transform.scale(img, (int(img.get_width() * self.size), int(img.get_height() * self.size)))
+
+        self.timer = 0
+
     def get_coords(self):
         return self.pos
 
@@ -44,26 +48,27 @@ class Planet:
         return res
 
     def draw(self, renderer):
-        img = PlanetImgs[types.index(self.type)]
-        renderer.draw(pygame.transform.scale(img, (int(img.get_width() * self.size), int(img.get_height() * self.size))), self.pos)
+        renderer.draw(self.img, self.pos)
 
     def generate_type(self, types):
         return types[random.randint(0, 2)]
 
-    def update(self):
-        if self.all_resources() + self.population >= self.size * 10000:
-            self.resources[self.type] = self.size * 10000 - self.all_resources()
-        else:
-            self.resources[self.type] += self.population
+    def update(self, dt):
+        if self.timer >= 1:
+            self.timer -= 1
+            if self.all_resources() + self.population >= int(self.size * 10000):
+                self.resources[self.type] = int(self.size * 10000) - self.all_resources()
+            else:
+                self.resources[self.type] += self.population
 
     def add_resources(self, type, amount):
         res = 0
         for type in types:
             res += self.resources[type]
             
-        if self.size * 10000 - self.all_resources() < amount:
-            self.resources[type] += amount - self.size * 10000 + self.all_resources()
-            return amount - self.size * 10000 + self.all_resources()
+        if int(self.size * 10000) - self.all_resources() < amount:
+            self.resources[type] += amount - int(self.size * 10000) + self.all_resources()
+            return amount - int(self.size * 10000) + self.all_resources()
         else:
             self.resources[type] += amount
             return amount
