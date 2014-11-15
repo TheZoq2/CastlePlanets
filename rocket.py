@@ -1,4 +1,4 @@
-import pygame, enum
+import pygame, math
 from Vec2 import *
 
 
@@ -8,7 +8,7 @@ class Rocket:
     def __init__(self, planet):
         self.planet = planet
         self.route = None
-        self.speed = 500
+        self.speed = 200
         self.pos = planet.get_coords()
         self.target = planet
 
@@ -41,4 +41,9 @@ class Rocket:
                 self.pos += diff.normalized() * self.speed * dt
 
     def draw(self, renderer):
-        renderer.draw(rocketImg, self.pos)
+        if self.route:
+            dir = self.target.get_coords() - self.pos
+            angle = math.degrees(Vec2(dir.y, dir.x).getAngle()) + 180
+            renderer.draw(pygame.transform.rotate(rocketImg, angle), self.pos)
+        else:
+            renderer.draw(rocketImg, self.pos)

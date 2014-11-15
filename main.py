@@ -96,12 +96,14 @@ while running:
                 if diff.getLen() <= 128 * planet.size:
                     selection = planet
                     scale = Vec2(256, 256) * selection.size
-                    #print(scale)
                     glow_scaled = pygame.transform.scale(glow, (int(scale.x) + 30, int(scale.y) + 30))
 
     # Update objects
     for rocket in rockets:
         rocket.update(dt)
+
+    for planet in planets:
+        planet.update(dt)
 
     renderer.move_camera(Vec2(xscroll, yscroll) * dt * cameraSpeed)
 
@@ -113,9 +115,7 @@ while running:
         renderer.draw(glow_scaled, selection.get_coords())
 
     for planet in planets:
-        planet.update(dt)
         planet.draw(renderer)
-
 
     for rocket in rockets:
         rocket.draw(renderer)
