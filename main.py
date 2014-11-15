@@ -34,16 +34,18 @@ mousePos = (0, 0)
 mouseVec = Vec2(0,0)
 mouseClicks = (False, False, False)
 
+background = pygame.image.load("Background.png")
 framerate = 50
 running = True
 yscroll = 0
 xscroll = 0
 renderer = Renderer()
-cameraSpeed = 400 # in pixels per second
+cameraSpeed = 800 # in pixels per second
 while running:
     dt = 1 / framerate
     
     renderer.clear()
+    renderer.draw(background, Vec2(0,0), True)
     mousePos = pygame.mouse.get_pos()
     mouseVec = Vec2(mousePos)
 

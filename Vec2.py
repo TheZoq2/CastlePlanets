@@ -66,6 +66,9 @@ class Vec2:
     def getAngle(self):
         return math.atan2(self.y, self.x)
 
+    def normalized(self):
+        return self / self.getLen()
+
     def __le__(self, other):
         return self.x <= other.x and self.y <= other.y
     def __ge__(self, other):
