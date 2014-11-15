@@ -11,7 +11,7 @@ import pdb
 pygame.init()
 clock = pygame.time.Clock()
 
-planets = [Planet("Earth", Vec2(0, 0), "Earth", 0.5, None, 0)]
+planets = [Planet("Earth", Vec2(0, 0), "Earth", 0.5, 0)]
 rockets = [Rocket(planets[0])]
 routes = []
 
@@ -34,11 +34,11 @@ for x in range(-10, 10):
     for y in range(-10, 10):
         if (x != 0 or y != 0) and random.randint(0, 3) > 0:
             offset = Vec2(random.randint(-90, 90), random.randint(-90, 90))
-            planet = Planet(None, Vec2(x, y) * 300 + offset, None, None, None, 0)
+            planet = Planet(None, Vec2(x, y) * 300 + offset, None, None, 0)
             planets.append(planet)
 
             if abs(x) == 1 and abs(y) == 1: # Create a trade route to a planet close to earth
-                routes.append(Traderoute((planets[0], planet)))
+                routes.append(Traderoute((planets[0], planet), ('Food', 'Food')))
 
 rockets[0].route = routes[0]
 
