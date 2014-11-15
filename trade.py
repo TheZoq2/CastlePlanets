@@ -1,8 +1,9 @@
 import pygame
 
 class Traderoute:
-    def __init__(self, path):
+    def __init__(self, path, cargo):
         self.path = path
+        self.cargo = cargo
         #print(path, len(path), len(path) - 1)
 
     def draw(self, renderer):
