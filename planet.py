@@ -33,6 +33,11 @@ class Planet:
         for type in types:
             self.resources[type] = 0
 
+        img = PlanetImgs[types.index(self.type)]
+        self.img = pygame.transform.scale(img, (int(img.get_width() * self.size), int(img.get_height() * self.size)))
+
+        self.timer = 0
+
     def get_coords(self):
         return self.pos
 
@@ -43,12 +48,12 @@ class Planet:
         return res
 
     def draw(self, renderer):
-        img = PlanetImgs[types.index(self.type)]
-        renderer.draw(pygame.transform.scale(img, (int(img.get_width() * self.size), int(img.get_height() * self.size))), self.pos)
+        renderer.draw(self.img, self.pos)
 
     def generate_type(self, types):
         return types[random.randint(0, 2)]
 
+<<<<<<< HEAD
     def population_growth(self):
         self.population += self.population // 10
 
@@ -58,6 +63,15 @@ class Planet:
             self.resources[self.type] = int(self.size * 10000) - self.all_resources()
         else:
             self.resources[self.type] += self.population
+=======
+    def update(self, dt):
+        if self.timer >= 1:
+            self.timer -= 1
+            if self.all_resources() + self.population >= int(self.size * 10000):
+                self.resources[self.type] = int(self.size * 10000) - self.all_resources()
+            else:
+                self.resources[self.type] += self.population
+>>>>>>> 313f209b79561fbc8f6a391e224df8ac00436e46
 
     def add_resources(self, type, amount):
         res = 0
