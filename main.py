@@ -10,10 +10,9 @@ from renderer import *
 pygame.init()
 clock = pygame.time.Clock()
 
-planets = [Planet(None, Vec2(0, 0), None, None, None, None, 0)]
+planets = [Planet(Vec2(0, 0), 0)]
 rockets = [Rocket(planets[0])]
 routes = []
-
 
 guiElements = []
 #guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
@@ -21,7 +20,7 @@ guiElements.append(Window(Vec2(0, 0), Vec2(100, 100), "testWindow.png"))
 guiElements[0].addChild(Button(Vec2(100, 300), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
 guiElements[0].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
 guiElements[0].addChild(GUIImage(Vec2(100, 300), Vec2(150, 10), "testHover.png"))
-#guiElements[0].addChild(GUIImage(Vec2(200, 100), Vec2(200, 10), "Hello world"))
+guiElements[0].addChild(GUIImage(Vec2(200, 100), Vec2(200, 10), "Hello world"))
 
 
 
@@ -30,7 +29,7 @@ for x in range(-10, 10):
     for y in range(-10, 10):
         if (x != 0 or y != 0) and random.randint(0, 3) > 0:
             offset = Vec2(random.randint(-90, 90), random.randint(-90, 90))
-            planet = Planet(None, Vec2(x, y) * 300 + offset, None, None, None, None, 0)
+            planet = Planet(Vec2(x, y) * 300 + offset, 0)
             planets.append(planet)
 
             if abs(x) == 1 and abs(y) == 1: # Create a trade route to a planet close to earth
@@ -72,8 +71,6 @@ while running:
                 xscroll -= 1
             elif event.key == K_d:
                 xscroll += 1
-            elif event.key == K_SPACE:
-                renderer.camera = Vec2(0,0)
         if event.type == KEYUP:
             if event.key == K_w:
                 yscroll += 1
@@ -91,11 +88,11 @@ while running:
     renderer.move_camera(Vec2(xscroll, yscroll) * dt * cameraSpeed)
 
     # Draw shit
-    for traderoute in routes:
-        traderoute.draw(renderer)
-
     for planet in planets:
         planet.draw(renderer)
+
+    for traderoute in routes:
+        pass
 
     for rocket in rockets:
         rocket.draw(renderer)
