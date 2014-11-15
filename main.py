@@ -44,9 +44,8 @@ yscroll = 0
 xscroll = 0
 renderer = Renderer()
 cameraSpeed = 800 # in pixels per second
+dt = 1 / framerate
 while running:
-    dt = 1 / framerate
-    
     renderer.clear()
     renderer.draw(background, Vec2(0,0), True)
     mousePos = pygame.mouse.get_pos()
@@ -98,5 +97,5 @@ while running:
         element.draw(renderer)
 
     pygame.display.flip()
-    clock.tick(framerate)
+    dt = clock.tick(framerate) / 1000
 
