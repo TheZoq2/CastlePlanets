@@ -1,4 +1,5 @@
 import pygame
+import pdb
 
 from Vec2 import *
 
@@ -10,27 +11,33 @@ BUTTON_CLICK = 3
 class GUIElement:
     parentPos = Vec2(0, 0)
     pos = Vec2(0, 0)
+    truePos = Vec2(0, 0)
 
     def __init__(self, parentPos, pos):
         self.parentPos = parentPos
         self.pos = pos
+
         
     def getPos(self):
         return self.pos
 
-    def setParent(self, parent):
-        self.paretPos = parent
+    def setParentPos(self, parent):
+        self.parentPos = parent
+        self.calcTruePos()
 
     def setPos(self, pos):
         self.pos = pos
+        calcTruePos()
 
     def draw(self, renderer):
         pass
     
     #Mouse pos is Vec2, mouseClicks is a tupple of mouse button states
     def update(self, mousePos, mouseClicks):
-        pass
-        
+        self.calcTruePos()
+
+    def calcTruePos(self):
+        self.truePos = self.pos + self.parentPos
 
 class Button(GUIElement):
     state = 0
@@ -40,8 +47,7 @@ class Button(GUIElement):
     onClick = None
 
     def __init__(self, parentPos, pos, imageNames):
-        super(GUIElement, self).__init__()
-
+        super().__init__(parentPos, pos)
         #loading images
         for i in imageNames:
             image = pygame.image.load(i)
@@ -53,9 +59,9 @@ class Button(GUIElement):
         super().update(mousePos, mouseClicks)
 
         #Calculating the edges of the button
-        bottomRight = self.pos + self.size
+        bottomRight = self.truePos + self.size
 
-        if(mousePos >= self.pos and mousePos <= bottomRight):
+        if(mousePos >= self.truePos and mousePos <= bottomRight):
             if(mouseClicks[0] == 1):
                 self.state = BUTTON_CLICK_START
             else:
@@ -78,21 +84,40 @@ class Button(GUIElement):
         if(self.state == BUTTON_HOVER):
             currentImage = self.images[2]
 
-        renderer.draw(currentImage, self.pos, True)
+        renderer.draw(currentImage, self.truePos, True)
     
     def setOnClick(self, func):
         self.onClick = func
 
-def Window(GUIElement):
+class Window(GUIElement):
     background = None
     size = Vec2(0, 0)
 
     children = []
 
     def __init__(self, parentPos, pos, backgroundName):
-        super(GUIElement, self).__init__()
+        super().__init__(parentPos, pos)
 
         self.background = pygame.image.load(backgroundName)
 
-    def addChild(child):
-        pass
+    def update(self, mousePos, mouseClicks):
+        super().update(mousePos, mouseClicks)
+
+        #uppdating all children
+        for child in self.children:
+            child.setParentPos(self.truePos)
+            child.update(mousePos, mouseClicks)
+
+    def draw(self, renderer):
+        super().draw(renderer)
+
+        renderer.draw(self.background, self.truePos, True)
+        
+        #Draw all the children
+        for child in self.children:
+            child.draw(renderer)
+
+
+    def addChild(self, child):
+        child.setParentPos(self.truePos)
+        self.children.append(child)

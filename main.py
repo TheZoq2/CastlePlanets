@@ -15,7 +15,10 @@ rockets = [Rocket(planets[0])]
 routes = []
 
 guiElements = []
-guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
+#guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
+guiElements.append(Window(Vec2(0, 0), Vec2(100, 100), "testWindow.png"))
+guiElements[0].addChild(Button(Vec2(100, 300), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
+guiElements[0].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
 
 # Generate planets
 for x in range(-10, 10):
