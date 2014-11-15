@@ -49,7 +49,11 @@ class Planet:
     def generate_type(self, types):
         return types[random.randint(0, 2)]
 
+    def population_growth(self):
+        self.population += self.population // 10
+
     def update(self):
+        self.population_growth()
         if self.all_resources() + self.population >= int(self.size * 10000):
             self.resources[self.type] = int(self.size * 10000) - self.all_resources()
         else:
