@@ -9,11 +9,12 @@ BUTTON_CLICK_START = 2
 BUTTON_CLICK = 3
 
 class GUIElement:
-    parentPos = Vec2(0, 0)
-    pos = Vec2(0, 0)
-    truePos = Vec2(0, 0)
 
     def __init__(self, parentPos, pos):
+        self.parentPos = Vec2(0, 0)
+        self.pos = Vec2(0, 0)
+        self.truePos = Vec2(0, 0)
+
         self.parentPos = parentPos
         self.pos = pos
 
@@ -40,9 +41,9 @@ class GUIElement:
         self.truePos = self.pos + self.parentPos
 
 class GUIImage(GUIElement):
-    image = None
 
     def __init__(self, parentPos, pos, imageFile):
+        self.image = None
         super().__init__(parentPos, pos)
 
         self.image = pygame.image.load(imageFile)
@@ -54,13 +55,14 @@ class GUIImage(GUIElement):
 
 
 class Button(GUIElement):
-    state = 0
-    images = []
-    size = Vec2(0, 0)
-
-    onClick = None
 
     def __init__(self, parentPos, pos, imageNames):
+        self.state = 0
+        self.images = []
+        self.size = Vec2(0, 0)
+
+        self.onClick = None
+
         super().__init__(parentPos, pos)
         #loading images
         for i in imageNames:
@@ -106,12 +108,13 @@ class Button(GUIElement):
             
 
 class Window(GUIElement):
-    background = None
-    size = Vec2(0, 0)
-
-    children = []
 
     def __init__(self, parentPos, pos, backgroundName):
+        self.background = None
+        self.size = Vec2(0, 0)
+
+        self.children = []
+
         super().__init__(parentPos, pos)
 
         self.background = pygame.image.load(backgroundName)
@@ -137,3 +140,5 @@ class Window(GUIElement):
     def addChild(self, child):
         child.setParentPos(self.truePos)
         self.children.append(child)
+
+        print("new children ", self.children)

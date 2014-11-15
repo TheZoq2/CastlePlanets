@@ -13,10 +13,11 @@ textObjects = {
 baseFont = pygame.SysFont("", 16)
 
 class TextWord(GUIElement):
-    text = ""
-    rendered = None
 
     def __init__(self, parentPos, pos, text):
+        self.text = ""
+        self.rendered = None
+
         super.__init__(parentPos, pos)
         self.text = text
 
@@ -27,10 +28,10 @@ class TextWord(GUIElement):
         renderer.draw(self.rendered, self.truePos)
 
 class TextObject(GUIElement):
-    text = ""
-    words = []
 
     def __init__(self, parentPos, pos, size, text):
+        self.text = ""
+        self.words = []
         super().__init__(parentPos, pos)
 
         self.text = text
