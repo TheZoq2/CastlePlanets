@@ -3,13 +3,17 @@ from pygame.locals import *
 from planet import *
 from trade import *
 from rocket import *
+<<<<<<< HEAD
 from gui import *
+=======
+from Vec2 import *
+from renderer import *
+>>>>>>> 097617c12c5ecd133bc74c63a36d69174a827933
 
 pygame.init()
-screen = pygame.display.set_mode((1280, 700))
 clock = pygame.time.Clock()
 
-planets = [Planet(640, 350, 0), Planet(800, 200, 0)]
+planets = [Planet(0, 0, 0), Planet(100, -200, 0)]
 rockets = [Rocket(planets[0])]
 routes = [Traderoute([planets[1], planets[0]])]
 
@@ -25,30 +29,57 @@ mouseClicks = (False, False, False)
 
 framerate = 50
 running = True
+yscroll = 0
+xscroll = 0
+renderer = Renderer()
+cameraSpeed = 400 # in pixels per second
 while running:
-    screen.fill((0, 0, 0))
-    for event in pygame.event.get():
-        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-            running = False
-
+    dt = 1 / framerate
+    
+    renderer.clear()
     mousePos = pygame.mouse.get_pos()
     mouseVec = Vec2(mousePos)
 
     mouseClicks = pygame.mouse.get_pressed()
 
+    for event in pygame.event.get():
+        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+            running = False
+
+        if event.type == KEYDOWN:
+            if event.key == K_w:
+                yscroll -= 1
+            elif event.key == K_s:
+                yscroll += 1
+            elif event.key == K_a:
+                xscroll -= 1
+            elif event.key == K_d:
+                xscroll += 1
+        if event.type == KEYUP:
+            if event.key == K_w:
+                yscroll += 1
+            elif event.key == K_s:
+                yscroll -= 1
+            elif event.key == K_a:
+                xscroll += 1
+            elif event.key == K_d:
+                xscroll -= 1
+
     # Update objects
     for rocket in rockets:
-        rocket.update(1 / framerate)
+        rocket.update(dt)
+
+    renderer.move_camera(Vec2(xscroll, yscroll) * dt * cameraSpeed)
 
     # Draw shit
     for planet in planets:
-        planet.draw(screen)
+        renderer.draw(planet)
 
     for traderoute in routes:
         pass
 
     for rocket in rockets:
-        rocket.draw(screen)
+        renderer.draw(rocket)
 
     for element in guiElements:
         element.update(mouseVec, mouseClicks)
