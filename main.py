@@ -42,14 +42,13 @@ guiElements[0].addChild(planet_iron)
 #guiElements[0].addChild(GUIImage(Vec2(100, 300), Vec2(150, 10), "testHover.png"))
 #guiElements[0].addChild(GUIImage(Vec2(200, 100), Vec2(200, 10), "Hello world"))
 #guiElements[1].addChild(TextWord(Vec2(100, 100), Vec2(200, 10), "Hello world"))
-textObject = TextObject(Vec2(100, 100), Vec2(30, 50), Vec2(280, 960), "If this is an image, it works: ~FOOD~. You can only have a ciration amount of wood, which is represented by ~WOOD_MAX~, ~IRON_MAX~")
-guiElements[1].addChild(textObject)
 
-textObject.setText("This text has been updated with the ^red^power of ~FOOD~")
 
 resourceText = TextObject(Vec2(0,0), Vec2(10,5), Vec2(1000, 1000), "")
 guiElements[2].addChild(resourceText)
 
+logText = TextObject(Vec2(100, 100), Vec2(30, 50), Vec2(250, 960), "Game Log")
+guiElements[1].addChild(logText)
 
 planets = [Planet("Earth", Vec2(0, 0), "Earth", 0.5, 30, True)]
 planets[0].add_resources("Food", 300)
@@ -89,6 +88,9 @@ selection = None
 
 multiselect = []
 
+def gameLog(str):
+    logText.setText(str + ' /n /n ' + logText.getText())
+
 def addTradeRoute():
     if selection != None:
         #multiselect = []
@@ -122,8 +124,10 @@ def payToWin(source_planet, target_planet, type, cost, population, food):
             source_planet.resources['Food'] -= food
             target_planet.resources['Food'] += food
         target_planet.ownage = True
+        gameLog('New traderoute established between %s and %s' % (source_planet.name, target_planet.name))
         return True
     else:
+        gameLog('Missing resources')
         return False
 
 
@@ -191,7 +195,7 @@ def all_max_resources(planets):
 
     return max_resources
 
-
+population_record = 0
 dragging = False
 while running:
     renderer.clear()
@@ -266,6 +270,11 @@ while running:
                 multi_glow_scaled = pygame.transform.scale(multiglow, (int(scale.x) + 30, int(scale.y) + 30))
                 renderer.draw(multi_glow_scaled, planet.get_coords())
 
+    current_resources = all_current_resources(planets)
+    current_population = current_resources['Population']
+    if current_population > population_record:
+        population_record = current_population
+
     # Update objects
     for rocket in rockets:
         rocket.update(dt)
@@ -298,6 +307,7 @@ while running:
     for element in guiElements:
         element.update(mouseVec, mouseClicks)
         element.draw(renderer)
+
 
     pygame.display.flip()
     dt = clock.tick(framerate) / 1000
