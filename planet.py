@@ -1,7 +1,7 @@
 import pygame, random, math
 from Vec2 import *
 
-FOOD_CONSUMPTION = 10
+FOOD_CONSUMPTION = 5
 PRODUCTION_PER_PERSON = 0.1
 POPULATION_GROWTH_PER_FOOD = 40
 
@@ -51,7 +51,8 @@ class Planet:
         self.maxResources = {
                 "Food": 1000,
                 "Wood": 1000,
-                "Iron": 1000
+                "Iron": 1000,
+                "Population": 120
             }
         self.production = {
                 "Food": 3,
@@ -96,11 +97,18 @@ class Planet:
     def population_growth(self):
         if self.population <= self.resources["Food"]:
             self.resources["Food"] -= self.population // FOOD_CONSUMPTION
-            self.population += self.resources['Food'] // POPULATION_GROWTH_PER_FOOD
+            if self.population + self.resources['Food'] // POPULATION_GROWTH_PER_FOOD < self.maxResources["Population"]:
+                self.population += self.resources['Food'] // POPULATION_GROWTH_PER_FOOD
+            else:
+                self.population = self.maxResources["Population"]
         else:
-            self.population -= FOOD_CONSUMPTION
-            self.resources["Food"] = 0
-    
+            if self.population - FOOD_CONSUMPTION > 0:
+                self.population -= FOOD_CONSUMPTION
+                self.resources["Food"] = 0
+            else:
+                self.population = 0
+
+            
     def getResourceProduction(self, resource):
         return math.floor(self.production[resource] * PRODUCTION_PER_PERSON * self.population)
 
