@@ -27,7 +27,7 @@ guiElements[1].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "te
 #guiElements[0].addChild(GUIImage(Vec2(100, 300), Vec2(150, 10), "testHover.png"))
 #guiElements[0].addChild(GUIImage(Vec2(200, 100), Vec2(200, 10), "Hello world"))
 #guiElements[1].addChild(TextWord(Vec2(100, 100), Vec2(200, 10), "Hello world"))
-textObject = TextObject(Vec2(100, 100), Vec2(10, 10), Vec2(280, 960), "If this is an image, it works: ~FOOD~. You can only have a ciration amount of wood, which is represented by ~WOOD_MAX~, ~IRON_MAX~") 
+textObject = TextObject(Vec2(100, 100), Vec2(10, 10), Vec2(280, 960), "If this is an image, it works: ~FOOD~. You can only have a ciration amount of wood, which is represented by ~WOOD_MAX~, ~IRON_MAX~")
 guiElements[1].addChild(textObject)
 
 textObject.setText("This text has been updated with the ^red^power of ~FOOD~")
@@ -50,7 +50,7 @@ mousePos = (0, 0)
 mouseVec = Vec2(0,0)
 mouseClicks = (False, False, False)
 
-background = pygame.image.load("Background.png")
+background = pygame.image.load("bg_small.png")
 glow = pygame.image.load("selection.png")
 framerate = 50
 running = True
@@ -63,11 +63,22 @@ dt = 1 / framerate
 #selection = planets[0]
 selection = None
 
+def clickedPlanet(mouseVec):
+    for planet in planets:
+        planet_screen_pos = planet.get_coords() - renderer.camera
+        planet_screen_pos += Vec2((SCREEN_WIDTH - 300) / 2, (SCREEN_HEIGHT - 200) / 2)
+        diff = mouseVec - planet_screen_pos
+        if diff.getLen() <= 128 * planet.size:
+            return planet
+    return None
+
+dragging = False
 while running:
     renderer.clear()
     renderer.draw(background, Vec2(0,0), True)
     mousePos = pygame.mouse.get_pos()
     mouseVec = Vec2(mousePos)
+    mouseRel = Vec2(pygame.mouse.get_rel())
 
     mouseClicks = pygame.mouse.get_pressed()
 
@@ -93,14 +104,19 @@ while running:
                 xscroll = 0
 
         if event.type == MOUSEBUTTONDOWN and event.button == 1:
-            for planet in planets:
-                planet_screen_pos = planet.get_coords() - renderer.camera
-                planet_screen_pos += Vec2((SCREEN_WIDTH - 300) / 2, (SCREEN_HEIGHT - 200) / 2)
-                diff = mouseVec - planet_screen_pos
-                if diff.getLen() <= 128 * planet.size:
-                    selection = planet
-                    scale = Vec2(256, 256) * selection.size
-                    glow_scaled = pygame.transform.scale(glow, (int(scale.x) + 30, int(scale.y) + 30))
+            planet = clickedPlanet(mouseVec)
+            if planet != None:
+                selection = planet
+                scale = Vec2(256, 256) * selection.size
+                glow_scaled = pygame.transform.scale(glow, (int(scale.x) + 30, int(scale.y) + 30))
+            else:
+                dragging = True
+
+        if event.type == MOUSEMOTION and dragging:
+            renderer.move_camera(mouseRel * -0.25)
+
+        if event.type == MOUSEBUTTONUP and event.button == 1:
+            dragging = False
 
     # Update objects
     for rocket in rockets:
