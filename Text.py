@@ -1,6 +1,7 @@
 from gui import *
 
 TEXT_SPECIAL_CHAR = "~"
+TEXT_COLOR_CHAR = "^"
 
 FONT_SIZE = 16
 TEXT_IMAGE_SIZE = 24
@@ -14,22 +15,29 @@ textObjects = {
         "WOOD_MAX": "Resources/woodMAX.png"
     }
 
+colors = {
+        "red": (255, 100, 100),
+        "green": (100, 255, 100),
+        "blue": (100, 100, 255),
+        "yellow": (255, 255, 100)
+    }
+
 pygame.font.init()
 baseFont = pygame.font.SysFont("arial", FONT_SIZE)
 
 class TextWord(GUIElement):
 
-    def __init__(self, parentPos, pos, text):
-        print("pos: ", pos, " parentPos ", parentPos)
+    def __init__(self, parentPos, pos, text, color=(255,255,255)):
         self.pos = pos
         self.parentPos = parentPos
         self.text = ""
         self.rendered = None
+        self.color = color
 
         super().__init__(parentPos, pos)
         self.text = text
 
-        self.rendered = baseFont.render(text, True, (255, 255, 255))
+        self.rendered = baseFont.render(text, True, self.color)
 
     def draw(self, renderer):
         super().draw(renderer)
@@ -83,7 +91,7 @@ class TextObject(GUIElement):
             #If this should be replaced by an image
             if(word[0] == TEXT_SPECIAL_CHAR):
                 #strip the special char
-                newWord = word[1:word.rfind("~")]
+                newWord = word[1:word.rfind(TEXT_SPECIAL_CHAR)]
 
                 if(newWord in textObjects):
                     imgPath = textObjects[newWord]
@@ -110,6 +118,21 @@ class TextObject(GUIElement):
                 else:
                     print("Special text thingy: ", word, " not recogniced")
             else:
+                wordColor = (255,255,255)
+                #Checking if the word should have a specific color
+                if(word[0] == TEXT_COLOR_CHAR):
+                    #Get the color text
+                    colorName = word[1:word.rfind(TEXT_COLOR_CHAR)]
+
+                    print(colorName)
+
+                    if(colorName in colors):
+                        wordColor = colors[colorName]
+                    
+                    word = word[word.rfind(TEXT_COLOR_CHAR) + 1:]
+
+                    
+
                 #calculating the size of the text
                 textSize = baseFont.size(word + " ")
 
@@ -124,7 +147,7 @@ class TextObject(GUIElement):
                         break
                     
 
-                newTextObject = TextWord(self.truePos, Vec2(cLineWidth, cLineStart), word + " ")
+                newTextObject = TextWord(self.truePos, Vec2(cLineWidth, cLineStart), word + " ", color = wordColor)
                 
                 cLineWidth = newLineWidth
 

@@ -30,7 +30,7 @@ guiElements[1].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "te
 textObject = TextObject(Vec2(100, 100), Vec2(10, 10), Vec2(280, 960), "If this is an image, it works: ~FOOD~. You can only have a ciration amount of wood, which is represented by ~WOOD_MAX~, ~IRON_MAX~") 
 guiElements[1].addChild(textObject)
 
-textObject.setText("This text has been updated with the power of ~FOOD~")
+textObject.setText("This text has been updated with the ^red^power of ~FOOD~")
 
 
 # Generate planets
