@@ -16,11 +16,11 @@ routes = []
 
 guiElements = []
 #guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
-guiElements.append(Window(Vec2(0, 0), Vec2(0, 500), "testWindow.png"))
+guiElements.append(Window(Vec2(0, 0), Vec2(0, 500), "GUI/bottombar.png"))
 #guiElements.append(testWindow)
-guiElements.append(Window(Vec2(0, 0), Vec2(980, 0), "testWindow2.png"))
+guiElements.append(Window(Vec2(0, 0), Vec2(980, 0), "GUI/sidebar.png"))
 
-add_traderoute = Button(Vec2(100, 300), Vec2(200, 10), ("planet.png", "testClick.png", "testHover.png"))
+add_traderoute = Button(Vec2(100, 300), Vec2(200, 30), ("trade_route_button.png", "trade_route_button.png", "trade_route_button.png"))
 guiElements[0].addChild(add_traderoute)
 
 planet_name = TextObject(Vec2(100,200), Vec2(10, 10), Vec2(100, 20), "Planet")
@@ -35,11 +35,11 @@ guiElements[0].addChild(planet_food)
 guiElements[0].addChild(planet_wood)
 guiElements[0].addChild(planet_iron)
 
-guiElements[1].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
+#guiElements[1].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
 #guiElements[0].addChild(GUIImage(Vec2(100, 300), Vec2(150, 10), "testHover.png"))
 #guiElements[0].addChild(GUIImage(Vec2(200, 100), Vec2(200, 10), "Hello world"))
 #guiElements[1].addChild(TextWord(Vec2(100, 100), Vec2(200, 10), "Hello world"))
-textObject = TextObject(Vec2(100, 100), Vec2(10, 10), Vec2(280, 960), "If this is an image, it works: ~FOOD~. You can only have a ciration amount of wood, which is represented by ~WOOD_MAX~, ~IRON_MAX~")
+textObject = TextObject(Vec2(100, 100), Vec2(30, 50), Vec2(280, 960), "If this is an image, it works: ~FOOD~. You can only have a ciration amount of wood, which is represented by ~WOOD_MAX~, ~IRON_MAX~")
 guiElements[1].addChild(textObject)
 
 textObject.setText("This text has been updated with the ^red^power of ~FOOD~")
@@ -130,6 +130,15 @@ def update_dashboard(selection):
     planet_wood.setText("~WOOD~ %i" % selection.resources['Wood'])
     planet_iron.setText("~IRON~ %i" % selection.resources['Iron'])
 
+def all_planet_resources(planets):
+    total_resources = {'Food': 0,
+                       'Wood': 0,
+                       'Iron': 0}
+    for planet in planets:
+        total_resources['Food'] += planet.resources['Food']
+        total_resources['Wood'] += planet.resources['Wood']
+        total_resources['Iron'] += planet.resources['Iron']
+    return total_resources
 
 dragging = False
 while running:
