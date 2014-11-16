@@ -23,6 +23,15 @@ guiElements.append(Window(Vec2(0, 0), Vec2(0, 500), "testWindow.png"))
 guiElements.append(Window(Vec2(0, 0), Vec2(980, 0), "testWindow2.png"))
 
 guiElements[0].addChild(Button(Vec2(100, 300), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
+
+planet_food = TextObject(Vec2(100, 200), Vec2(100, 100), Vec2(200, 200), "~FOOD~ -")
+planet_wood = TextObject(Vec2(100, 200), Vec2(100, 125), Vec2(200, 200), "~WOOD~ -")
+planet_iron = TextObject(Vec2(100, 200), Vec2(100, 150), Vec2(200, 200), "~IRON~ -")
+
+guiElements[0].addChild(planet_food)
+guiElements[0].addChild(planet_wood)
+guiElements[0].addChild(planet_iron)
+
 guiElements[1].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
 #guiElements[0].addChild(GUIImage(Vec2(100, 300), Vec2(150, 10), "testHover.png"))
 #guiElements[0].addChild(GUIImage(Vec2(200, 100), Vec2(200, 10), "Hello world"))
@@ -42,7 +51,7 @@ for x in range(-10, 10):
             planets.append(planet)
 
             if abs(x) == 1 and abs(y) == 1: # Create a trade route to a planet close to earth
-                routes.append(Traderoute((planets[0], planet), ('Food', 'Food')))
+                routes.append(Traderoute((planets[0], planet), ('Food', 'Iron')))
 
 rockets[0].route = routes[0]
 
@@ -99,6 +108,11 @@ while running:
                 diff = mouseVec - planet_screen_pos
                 if diff.getLen() <= 128 * planet.size:
                     selection = planet
+
+                    planet_food.setText("~FOOD~ %i" % planet.resources['Food'])
+                    planet_wood.setText("~WOOD~ %i" % planet.resources['Wood'])
+                    planet_iron.setText("~IRON~ %i" % planet.resources['Iron'])
+
                     scale = Vec2(256, 256) * selection.size
                     glow_scaled = pygame.transform.scale(glow, (int(scale.x) + 30, int(scale.y) + 30))
 

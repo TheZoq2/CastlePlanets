@@ -36,6 +36,9 @@ class Planet:
         for type in types:
             self.resources[type] = 0
 
+        if self.name == "Earth":
+            self.resources['Food'] = 100
+
         img = PlanetImgs[types.index(self.type)]
         self.img = pygame.transform.scale(img, (int(img.get_width() * self.size), int(img.get_height() * self.size)))
 
@@ -75,16 +78,7 @@ class Planet:
                 self.resources[self.type] += self.population
 
     def add_resources(self, type, amount):
-        res = 0
-        for type in types:
-            res += self.resources[type]
-            
-        if int(self.size * 10000) - self.all_resources() < amount:
-            self.resources[type] += amount - int(self.size * 10000) + self.all_resources()
-            return amount - int(self.size * 10000) + self.all_resources()
-        else:
-            self.resources[type] += amount
-            return amount
+        self.resources[type] += amount
 
     def get_resources(self, type, amount):
         if self.resources[type] >= amount:
