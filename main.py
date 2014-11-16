@@ -108,6 +108,15 @@ def update_dashboard(selection):
     planet_wood.setText("~WOOD~ %i" % selection.resources['Wood'])
     planet_iron.setText("~IRON~ %i" % selection.resources['Iron'])
 
+def all_planet_resources(planets):
+    total_resources = {'Food': 0,
+                       'Wood': 0,
+                       'Iron': 0}
+    for planet in planets:
+        total_resources['Food'] += planet.resources['Food']
+        total_resources['Wood'] += planet.resources['Wood']
+        total_resources['Iron'] += planet.resources['Iron']
+    return total_resources
 
 dragging = False
 while running:
