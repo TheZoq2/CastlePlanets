@@ -69,13 +69,16 @@ class Planet:
 
 
     def update(self, dt):
-        if self.timer >= 1:
-            self.timer -= 1
+        if self.timer >= 100:
+            self.timer = 0
+            # planet producing food will eat all of it, eat less or produce more!
             self.population_growth()
             if self.all_resources() + self.population >= int(self.size * 10000):
                 self.resources[self.type] = int(self.size * 10000) - self.all_resources()
             else:
                 self.resources[self.type] += self.population
+        else:
+            self.timer += 1
 
     def add_resources(self, type, amount):
         self.resources[type] += amount
