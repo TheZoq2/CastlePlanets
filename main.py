@@ -92,6 +92,28 @@ def addTradeRoute():
 
 add_traderoute.setOnClick(addTradeRoute)
 
+def payToWin(source_planet, target_planet, type, cost, population, food):
+    print('payToWin')
+    print(source_planet.population)
+    print(source_planet.resources[type])
+    if source_planet.population >= population and source_planet.resources[type] >= cost and source_planet.resources['Food'] >= food:
+        print('transaction approved')
+        source_planet.resources[type] -= cost
+        if not target_planet.ownage:
+            print('undiscovered ground!')
+            source_planet.population -= population
+            source_planet.popFloat -= population
+            target_planet.population = population
+            target_planet.popFloat = population
+
+            source_planet.resources['Food'] -= food
+            target_planet.resources['Food'] += food
+        target_planet.ownage = True
+        return True
+    else:
+        return False
+    
+
 def clickedPlanet(mouseVec):
     for planet in planets:
         planet_screen_pos = planet.get_coords() - renderer.camera
@@ -146,7 +168,7 @@ while running:
 
         if event.type == MOUSEBUTTONDOWN and event.button == 1 and mouseVec.x < 980 and mouseVec.y < 500:
             planet = clickedPlanet(mouseVec)
-            if planet in multiselect:
+            if planet in multiselect and payToWin(selection, planet, 'Iron', 100, 10, 20):
                 print('Multiselected %s -> %s' % (selection.name, planet.name))
                 new_route = Traderoute((selection, planet), ('Food', 'Iron'))
                 routes.append(new_route)
