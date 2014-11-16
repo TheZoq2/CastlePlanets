@@ -263,7 +263,7 @@ while running:
             dragging = False
 
     resAmnt = all_current_resources(planets)
-    resourceText.setText("~FOOD~ %i ~WOOD~ %i ~IRON~ %i ^blue^Population: %i ^green^Population ^green^Record: %i" % (resAmnt['Food'], resAmnt['Wood'], resAmnt['Iron'], resAmnt['Population'], population_record))
+    resourceText.setText("~FOOD~ %i ~WOOD~ %i ~IRON~ %i ~POP~ %i ^green^Population ^green^Record: %i" % (resAmnt['Food'], resAmnt['Wood'], resAmnt['Iron'], resAmnt['Population'], population_record))
 
     renderer.move_camera(Vec2(xscroll, yscroll) * dt * cameraSpeed)
     if multiselect != []:
