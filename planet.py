@@ -52,7 +52,7 @@ class Planet:
                 "Food": 1000,
                 "Wood": 1000,
                 "Iron": 1000,
-                "Population": 120
+                "Population": 1000
             }
         self.production = {
                 "Food": 3,
@@ -108,7 +108,7 @@ class Planet:
             else:
                 self.population = 0
 
-            
+
     def getResourceProduction(self, resource):
         return math.floor(self.production[resource] * PRODUCTION_PER_PERSON * self.population)
 
