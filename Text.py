@@ -75,6 +75,9 @@ class TextObject(GUIElement):
     def setText(self, text):
         self.text = text
         self.generateObjects()
+
+    def getText(self):
+        return self.text
     
     def generateObjects(self):
         #Clearing the old words
