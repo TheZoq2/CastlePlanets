@@ -246,7 +246,7 @@ def update_dashboard(selection):
         tradePlanetNames[1].setText(planets[1].name)
         #abcd
         
-        tradeTransferText[0].setText(">>>> " + RESOURCE_TO_IMAGE[selection.cargo[0]])
+        tradeTransferText[0].setText(RESOURCE_TO_IMAGE[selection.cargo[0]] + " >>>>")
         tradeTransferText[1].setText("<<<< " + RESOURCE_TO_IMAGE[selection.cargo[1]])
         
 
