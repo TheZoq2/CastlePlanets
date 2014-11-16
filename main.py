@@ -16,11 +16,11 @@ routes = []
 
 guiElements = []
 #guiElements.append(Button(Vec2(0, 0), Vec2(10, 10), ("planet.png", "testClick.png", "testHover.png")))
-guiElements.append(Window(Vec2(0, 0), Vec2(0, 500), "testWindow.png"))
+guiElements.append(Window(Vec2(0, 0), Vec2(0, 500), "GUI/bottombar.png"))
 #guiElements.append(testWindow)
-guiElements.append(Window(Vec2(0, 0), Vec2(980, 0), "testWindow2.png"))
+guiElements.append(Window(Vec2(0, 0), Vec2(980, 0), "GUI/sidebar.png"))
 
-add_traderoute = Button(Vec2(100, 300), Vec2(200, 10), ("planet.png", "testClick.png", "testHover.png"))
+add_traderoute = Button(Vec2(100, 300), Vec2(200, 30), ("trade_route_button.png", "trade_route_button.png", "trade_route_button.png"))
 guiElements[0].addChild(add_traderoute)
 
 planet_name = TextObject(Vec2(100,200), Vec2(10, 10), Vec2(100, 20), "Planet")
@@ -35,11 +35,11 @@ guiElements[0].addChild(planet_food)
 guiElements[0].addChild(planet_wood)
 guiElements[0].addChild(planet_iron)
 
-guiElements[1].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
+#guiElements[1].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
 #guiElements[0].addChild(GUIImage(Vec2(100, 300), Vec2(150, 10), "testHover.png"))
 #guiElements[0].addChild(GUIImage(Vec2(200, 100), Vec2(200, 10), "Hello world"))
 #guiElements[1].addChild(TextWord(Vec2(100, 100), Vec2(200, 10), "Hello world"))
-textObject = TextObject(Vec2(100, 100), Vec2(10, 10), Vec2(280, 960), "If this is an image, it works: ~FOOD~. You can only have a ciration amount of wood, which is represented by ~WOOD_MAX~, ~IRON_MAX~")
+textObject = TextObject(Vec2(100, 100), Vec2(30, 50), Vec2(280, 960), "If this is an image, it works: ~FOOD~. You can only have a ciration amount of wood, which is represented by ~WOOD_MAX~, ~IRON_MAX~")
 guiElements[1].addChild(textObject)
 
 textObject.setText("This text has been updated with the ^red^power of ~FOOD~")
@@ -47,7 +47,9 @@ textObject.setText("This text has been updated with the ^red^power of ~FOOD~")
 
 planets = [Planet("Earth", Vec2(0, 0), "Earth", 0.5, 30, True)]
 planets[0].add_resources("Food", 300)
-rockets = [Rocket(planets[0])]
+#rockets = [Rocket(planets[0])]
+rockets = []
+
 # Generate planets
 for x in range(-10, 10):
     for y in range(-10, 10):
@@ -56,10 +58,10 @@ for x in range(-10, 10):
             planet = Planet(None, Vec2(x, y) * 300 + offset, None, None, 0, None)
             planets.append(planet)
 
-            if abs(x) == 1 and abs(y) == 1: # Create a trade route to a planet close to earth
-                routes.append(Traderoute((planets[0], planet), ('Food', 'Iron')))
+            #if abs(x) == 1 and abs(y) == 1: # Create a trade route to a planet close to earth
+            #    routes.append(Traderoute((planets[0], planet), ('Food', 'Iron')))
 
-rockets[0].route = routes[0]
+#rockets[0].route = routes[0]
 
 mousePos = (0, 0)
 mouseVec = Vec2(0,0)
@@ -89,6 +91,28 @@ def addTradeRoute():
             multiselect.append(planet)
 
 add_traderoute.setOnClick(addTradeRoute)
+
+def payToWin(source_planet, target_planet, type, cost, population, food):
+    print('payToWin')
+    print(source_planet.population)
+    print(source_planet.resources[type])
+    if source_planet.population >= population and source_planet.resources[type] >= cost and source_planet.resources['Food'] >= food:
+        print('transaction approved')
+        source_planet.resources[type] -= cost
+        if not target_planet.ownage:
+            print('undiscovered ground!')
+            source_planet.population -= population
+            source_planet.popFloat -= population
+            target_planet.population = population
+            target_planet.popFloat = population
+
+            source_planet.resources['Food'] -= food
+            target_planet.resources['Food'] += food
+        target_planet.ownage = True
+        return True
+    else:
+        return False
+    
 
 def clickedPlanet(mouseVec):
     for planet in planets:
@@ -126,6 +150,15 @@ def update_dashboard(selection):
         planet_wood.setText("~WOOD~ %i" % selection.resources['Wood'])
         planet_iron.setText("~IRON~ %i" % selection.resources['Iron'])
 
+def all_planet_resources(planets):
+    total_resources = {'Food': 0,
+                       'Wood': 0,
+                       'Iron': 0}
+    for planet in planets:
+        total_resources['Food'] += planet.resources['Food']
+        total_resources['Wood'] += planet.resources['Wood']
+        total_resources['Iron'] += planet.resources['Iron']
+    return total_resources
 
 dragging = False
 while running:
@@ -140,7 +173,7 @@ while running:
     mouseClicks = pygame.mouse.get_pressed()
 
     for event in pygame.event.get():
-        if event.type == QUIT:# or (event.type == KEYDOWN and event.key == K_ESCAPE):
+        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_x):
             running = False
 
         if event.type == KEYDOWN:
@@ -154,17 +187,19 @@ while running:
                 xscroll = 1
             elif event.key == K_SPACE:
                 renderer.camera = Vec2(0, 0)
+            elif event.key == K_ESCAPE:
+                multiselect = []
         if event.type == KEYUP:
             if event.key == K_w or event.key == K_s:
                 yscroll = 0
             elif event.key == K_a or event.key == K_d:
                 xscroll = 0
 
-        if event.type == MOUSEBUTTONDOWN and event.button == 1:
+        if event.type == MOUSEBUTTONDOWN and event.button == 1 and mouseVec.x < 980 and mouseVec.y < 500:
             planet = clickedPlanet(mouseVec)
             route = clickedTradeRoute(mouseVec)
 
-            if planet in multiselect:
+            if planet in multiselect and payToWin(selection, planet, 'Iron', 100, 10, 20):
                 print('Multiselected %s -> %s' % (selection.name, planet.name))
                 new_route = Traderoute((selection, planet), ('Food', 'Iron'))
                 routes.append(new_route)

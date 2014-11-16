@@ -12,6 +12,8 @@ PlanetImgs += [pygame.image.load("Planets/Earth.png")]
 
 print(PlanetImgs)
 
+castleImg = pygame.image.load("Resources/castle.png")
+
 # Nothing should be changed
 types = ["Food", "Wood", "Iron", "Nothing", "Nothing2", "Earth"]
 resourceNames = ["Food", "Wood", "Iron"]
@@ -67,6 +69,7 @@ class Planet:
         self.img = pygame.transform.scale(img, (int(img.get_width() * self.size), int(img.get_height() * self.size)))
 
         self.timer = 0
+        self.castleAngle = random.randint(-20, 20)
 
     def get_coords(self):
         return self.pos
@@ -82,6 +85,10 @@ class Planet:
 
     def draw(self, renderer):
         renderer.draw(self.img, self.pos)
+        if self.ownage:
+            scale = self.size * 128
+            castleVec = Vec2(scale * math.sin(math.radians(self.castleAngle)), scale * math.cos(math.radians(self.castleAngle)))
+            renderer.draw(pygame.transform.rotate(castleImg, self.castleAngle), self.pos - castleVec)
 
     def generate_type(self, types):
         return types[random.randint(0, 2)]
@@ -119,8 +126,8 @@ class Planet:
         self.timer += dt
 
         if(self.timer >= 1):
-            self.timer = self.timer - 1
-            
+            self.timer -= 1
+
             self.population_growth()
             self.produce()
 
