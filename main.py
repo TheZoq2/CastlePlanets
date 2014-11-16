@@ -27,7 +27,7 @@ guiElements[0].addChild(add_traderoute)
 guiElements[0].addChild(add_rocket)
 
 planet_name = TextObject(Vec2(100,200), Vec2(100, 30), Vec2(100, 20), "Planet")
-planet_population = TextObject(Vec2(100, 200), Vec2(100, 75), Vec2(200, 200), "P: -")
+planet_population = TextObject(Vec2(100, 200), Vec2(100, 75), Vec2(200, 200), "~POP~ -")
 planet_food = TextObject(Vec2(100, 200), Vec2(100, 100), Vec2(200, 200), "~FOOD~ -")
 planet_wood = TextObject(Vec2(100, 200), Vec2(100, 125), Vec2(200, 200), "~WOOD~ -")
 planet_iron = TextObject(Vec2(100, 200), Vec2(100, 150), Vec2(200, 200), "~IRON~ -")
@@ -162,7 +162,7 @@ def clickedTradeRoute(mouseVec):
 def update_dashboard(selection):
     if(isinstance(selection, Planet)):
         planet_name.setText(selection.name)
-        planet_population.setText("P: %i" % selection.population)
+        planet_population.setText("~POP~ %i" % selection.population)
         planet_food.setText("~FOOD~ %i" % selection.resources['Food'])
         planet_wood.setText("~WOOD~ %i" % selection.resources['Wood'])
         planet_iron.setText("~IRON~ %i" % selection.resources['Iron'])
