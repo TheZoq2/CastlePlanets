@@ -63,11 +63,22 @@ dt = 1 / framerate
 #selection = planets[0]
 selection = None
 
+def clickedPlanet(mouseVec):
+    for planet in planets:
+        planet_screen_pos = planet.get_coords() - renderer.camera
+        planet_screen_pos += Vec2((SCREEN_WIDTH - 300) / 2, (SCREEN_HEIGHT - 200) / 2)
+        diff = mouseVec - planet_screen_pos
+        if diff.getLen() <= 128 * planet.size:
+            return planet
+    return None
+
+dragging = False
 while running:
     renderer.clear()
     renderer.draw(background, Vec2(0,0), True)
     mousePos = pygame.mouse.get_pos()
     mouseVec = Vec2(mousePos)
+    mouseRel = Vec2(pygame.mouse.get_rel())
 
     mouseClicks = pygame.mouse.get_pressed()
 
@@ -93,14 +104,19 @@ while running:
                 xscroll = 0
 
         if event.type == MOUSEBUTTONDOWN and event.button == 1:
-            for planet in planets:
-                planet_screen_pos = planet.get_coords() - renderer.camera
-                planet_screen_pos += Vec2((SCREEN_WIDTH - 300) / 2, (SCREEN_HEIGHT - 200) / 2)
-                diff = mouseVec - planet_screen_pos
-                if diff.getLen() <= 128 * planet.size:
-                    selection = planet
-                    scale = Vec2(256, 256) * selection.size
-                    glow_scaled = pygame.transform.scale(glow, (int(scale.x) + 30, int(scale.y) + 30))
+            planet = clickedPlanet(mouseVec)
+            if planet != None:
+                selection = planet
+                scale = Vec2(256, 256) * selection.size
+                glow_scaled = pygame.transform.scale(glow, (int(scale.x) + 30, int(scale.y) + 30))
+            else:
+                dragging = True
+
+        if event.type == MOUSEMOTION and dragging:
+            renderer.move_camera(mouseRel * -0.25)
+
+        if event.type == MOUSEBUTTONUP and event.button == 1:
+            dragging = False
 
     # Update objects
     for rocket in rockets:
