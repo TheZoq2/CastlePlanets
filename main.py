@@ -21,7 +21,9 @@ guiElements.append(Window(Vec2(0, 0), Vec2(0, 500), "GUI/bottombar.png"))
 guiElements.append(Window(Vec2(0, 0), Vec2(980, 0), "GUI/sidebar.png"))
 
 add_traderoute = Button(Vec2(100, 300), Vec2(200, 30), ("trade_route_button.png", "trade_route_button.png", "trade_route_button.png"))
+add_rocket = Button(Vec2(0,0), Vec2(890, 30), ("rocket.png", "rocket.png", "rocket.png"))
 guiElements[0].addChild(add_traderoute)
+guiElements[0].addChild(add_rocket)
 
 planet_name = TextObject(Vec2(100,200), Vec2(100, 30), Vec2(100, 20), "Planet")
 planet_population = TextObject(Vec2(100, 200), Vec2(100, 75), Vec2(200, 200), "P: -")
@@ -90,7 +92,14 @@ def addTradeRoute():
             #print(planet.name)
             multiselect.append(planet)
 
+def addRocket():
+    if selection != None and isinstance(selection, Traderoute):
+        rocket = Rocket(selection.path[0])
+        rocket.route = selection
+        rockets.append(rocket)
+
 add_traderoute.setOnClick(addTradeRoute)
+add_rocket.setOnClick(addRocket)
 
 def payToWin(source_planet, target_planet, type, cost, population, food):
     print('payToWin')
