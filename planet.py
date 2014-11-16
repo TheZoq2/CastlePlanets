@@ -95,11 +95,10 @@ class Planet:
 
     def population_growth(self):
         if self.population <= self.resources["Food"]:
-            self.resources["Food"] -= self.population / FOOD_CONSUMPTION
-            self.popFloat += self.popFloat / POPULATION_GROWTH_PER_FOOD
-            self.population = math.floor(self.popFloat)
+            self.resources["Food"] -= self.population // FOOD_CONSUMPTION
+            self.population += self.resources['Food'] // POPULATION_GROWTH_PER_FOOD
         else:
-            self.population = self.resources["Food"]
+            self.population -= FOOD_CONSUMPTION
             self.resources["Food"] = 0
     
     def getResourceProduction(self, resource):
