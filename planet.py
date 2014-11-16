@@ -125,7 +125,7 @@ class Planet:
             self.produce()
 
     def add_resources(self, type, amount):
-        if self.resources[Type] + amount < self.maxResources[type]:
+        if self.resources[type] + amount < self.maxResources[type]:
             self.resources[type] += amount
             return amount
         else:
