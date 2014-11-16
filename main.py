@@ -50,7 +50,7 @@ mousePos = (0, 0)
 mouseVec = Vec2(0,0)
 mouseClicks = (False, False, False)
 
-background = pygame.image.load("Background.png")
+background = pygame.image.load("bg_small.png")
 glow = pygame.image.load("selection.png")
 framerate = 50
 running = True
