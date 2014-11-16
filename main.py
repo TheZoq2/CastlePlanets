@@ -19,6 +19,7 @@ guiElements = []
 guiElements.append(Window(Vec2(0, 0), Vec2(0, 500), "GUI/bottombar.png"))
 #guiElements.append(testWindow)
 guiElements.append(Window(Vec2(0, 0), Vec2(980, 0), "GUI/sidebar.png"))
+guiElements.append(Window(Vec2(0, 0), Vec2(0, 0), "GUI/topbar.png"))
 
 add_traderoute = Button(Vec2(100, 300), Vec2(200, 30), ("trade_route_button.png", "trade_route_button.png", "trade_route_button.png"))
 add_rocket = Button(Vec2(0,0), Vec2(890, 30), ("rocket.png", "rocket.png", "rocket.png"))
@@ -45,6 +46,9 @@ textObject = TextObject(Vec2(100, 100), Vec2(30, 50), Vec2(280, 960), "If this i
 guiElements[1].addChild(textObject)
 
 textObject.setText("This text has been updated with the ^red^power of ~FOOD~")
+
+resourceText = TextObject(Vec2(0,0), Vec2(10,5), Vec2(1000, 1000), "")
+guiElements[2].addChild(resourceText)
 
 
 planets = [Planet("Earth", Vec2(0, 0), "Earth", 0.5, 30, True)]
@@ -121,7 +125,7 @@ def payToWin(source_planet, target_planet, type, cost, population, food):
         return True
     else:
         return False
-    
+
 
 def clickedPlanet(mouseVec):
     for planet in planets:
@@ -145,11 +149,11 @@ def clickedTradeRoute(mouseVec):
             lowestRoute = route
             lowestDist = dist.getLen()
 
-    
+
     if((lowestDist < 64)):
         return lowestRoute
     return None
-        
+
 
 def update_dashboard(selection):
     if(isinstance(selection, Planet)):
@@ -160,7 +164,7 @@ def update_dashboard(selection):
         planet_iron.setText("~IRON~ %i" % selection.resources['Iron'])
 
 def all_current_resources(planets):
-    res = ['Food', 'Wood', 'Iron', 'Population']
+    res = ['Food', 'Wood', 'Iron']
     total_resources = {'Food': 0,
                        'Wood': 0,
                        'Iron': 0,
@@ -249,6 +253,9 @@ while running:
         if event.type == MOUSEBUTTONUP and event.button == 1:
             dragging = False
 
+    resAmnt = all_current_resources(planets)
+    resourceText.setText("~FOOD~ %i ~WOOD~ %i ~IRON~ %i ^blue^Population: %i" % (resAmnt['Food'], resAmnt['Wood'], resAmnt['Iron'], resAmnt['Population']))
+
     renderer.move_camera(Vec2(xscroll, yscroll) * dt * cameraSpeed)
     if multiselect != []:
         for planet in multiselect:
@@ -274,7 +281,7 @@ while running:
         selected = False
         if(traderoute == selection):
             selected = True
-        
+
         traderoute.draw(renderer, isSelected=selected)
 
     if selection != None and isinstance(selection, Planet):

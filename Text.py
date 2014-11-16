@@ -130,7 +130,7 @@ class TextObject(GUIElement):
                     #Get the color text
                     colorName = word[1:word.rfind(TEXT_COLOR_CHAR)]
 
-                    print(colorName)
+                    #print(colorName)
 
                     if(colorName in colors):
                         wordColor = colors[colorName]
