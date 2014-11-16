@@ -12,7 +12,7 @@ PlanetImgs += [pygame.image.load("Planets/Earth.png")]
 
 print(PlanetImgs)
 
-castleImg = pygame.image.load("castle.png")
+castleImg = pygame.image.load("Resources/castle.png")
 
 # Nothing should be changed
 types = ["Food", "Wood", "Iron", "Nothing", "Nothing2", "Earth"]
