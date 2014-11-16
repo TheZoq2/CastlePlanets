@@ -143,12 +143,14 @@ while running:
                 print('Multiselected %s -> %s' % (selection.name, planet.name))
                 routes.append(Traderoute((selection, planet), ('Food', 'Iron')))
                 multiselect = []
-            if planet != None:
+            elif planet != None:
+                #if planet in [x.path[0] for x in routes] + [x.path[1] for x in routes] or planet == planets[0]:
                 selection = planet
                 scale = Vec2(256, 256) * selection.size
                 glow_scaled = pygame.transform.scale(glow, (int(scale.x) + 30, int(scale.y) + 30))
             else:
                 dragging = True
+                multiselect = []
 
         if event.type == MOUSEMOTION and dragging:
             renderer.move_camera(mouseRel * -0.25)
@@ -158,9 +160,10 @@ while running:
 
     if multiselect != []:
         for planet in multiselect:
-            scale = Vec2(256, 256) * planet.size
-            glow_scaled = pygame.transform.scale(multiglow, (int(scale.x) + 30, int(scale.y) + 30))
-            renderer.draw(glow_scaled, planet.get_coords())
+            if not ((selection, planet) in [(x.path[0], x.path[1]) for x in routes]) and not ((selection, planet) in [(x.path[0], x.path[1]) for x in routes]):
+                scale = Vec2(256, 256) * planet.size
+                glow_scaled = pygame.transform.scale(multiglow, (int(scale.x) + 30, int(scale.y) + 30))
+                renderer.draw(glow_scaled, planet.get_coords())
 
     # Update objects
     for rocket in rockets:
