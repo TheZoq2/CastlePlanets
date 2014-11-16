@@ -243,10 +243,16 @@ while running:
 
     # Draw shit
     for traderoute in routes:
-        traderoute.draw(renderer)
+        selected = False
+        if(traderoute == selection):
+            selected = True
+        
+        traderoute.draw(renderer, isSelected=selected)
 
     if selection != None and isinstance(selection, Planet):
         renderer.draw(glow_scaled, selection.get_coords())
+    elif selection != None and isinstance(selection, Traderoute):
+        pass
 
     for planet in planets:
         planet.draw(renderer)
