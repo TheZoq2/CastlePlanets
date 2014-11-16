@@ -53,7 +53,6 @@ class TextObject(GUIElement):
         self.text = text
         
         super().calcTruePos()
-        print("Selftruepsos ", self.truePos)
         self.generateObjects()
 
 
@@ -64,8 +63,16 @@ class TextObject(GUIElement):
         for word in self.words:
             word.setParentPos(self.truePos)
             word.update(mousePos, mouseClicks)
+
+    def setText(self, text):
+        self.text = text
+        self.generateObjects()
     
     def generateObjects(self):
+        #Clearing the old words
+        self.words = []
+
+
         #Split text into words
         rawWords = self.text.split()
         
@@ -78,8 +85,6 @@ class TextObject(GUIElement):
                 #strip the special char
                 newWord = word[1:word.rfind("~")]
 
-                print(newWord)
-                
                 if(newWord in textObjects):
                     imgPath = textObjects[newWord]
 
