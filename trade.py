@@ -12,6 +12,7 @@ class Traderoute:
     def __init__(self, path, cargo):
         self.path = path
         self.cargo = cargo
+        self.color = (255,255,255)
         #print(path, len(path), len(path) - 1)
 
     def draw(self, renderer):
@@ -23,4 +24,8 @@ class Traderoute:
             while seg_start < diff.getLen():
                 renderer.line(p1 + diff.normalized() * seg_start, p1 + diff.normalized() * (seg_start + 15))
                 seg_start += 25
+
+    
+    def getLowestDistance(self, pos):
+        pass
 
