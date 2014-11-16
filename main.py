@@ -178,8 +178,7 @@ def all_max_resources(planets):
     res = ['Food', 'Wood', 'Iron', 'Population']
     max_resources = {'Food': 0,
                      'Wood': 0,
-                     'Iron': 0,
-                     'Population': 0}
+                     'Iron': 0,}
 
     for planet in planets:
         if planet.ownage == True:
