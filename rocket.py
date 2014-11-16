@@ -4,11 +4,13 @@ from Vec2 import *
 
 rocketImg = pygame.image.load("rocket.png")
 
+ROCKET_SPEED = 100
+
 class Rocket:
     def __init__(self, planet):
         self.planet = planet
         self.route = None
-        self.speed = 200
+        self.speed = ROCKET_SPEED
         self.pos = planet.get_coords()
         self.target = planet
 

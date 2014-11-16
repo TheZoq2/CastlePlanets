@@ -1,5 +1,9 @@
-import pygame, random
+import pygame, random, math
 from Vec2 import *
+
+FOOD_CONSUMPTION = 10
+PRODUCTION_PER_PERSON = 0.1
+POPULATION_GROWTH_PER_FOOD = 40
 
 PlanetImgs = []
 for i in range(5):
@@ -10,6 +14,8 @@ print(PlanetImgs)
 
 # Nothing should be changed
 types = ["Food", "Wood", "Iron", "Nothing", "Nothing2", "Earth"]
+resourceNames = ["Food", "Wood", "Iron"]
+
 with open('planetnames.txt', 'r') as n:
     names = []
     for line in n:
@@ -23,6 +29,8 @@ class Planet:
         self.size = size
         self.population = population
         self.ownage = ownage
+            
+
         if self.name == None:
             self.name = random.choice(names)
         if self.type == None:
@@ -32,7 +40,22 @@ class Planet:
         if self.ownage == None:
             self.ownage = False
 
-        self.resources = {}
+        self.resources = {
+                "Food": 0,
+                "Wood": 0,
+                "Iron": 0
+            }
+        self.maxResources = {
+                "Food": 1000,
+                "Wood": 1000,
+                "Iron": 1000
+            }
+        self.production = {
+                "Food": 3,
+                "Wood": 3,
+                "Iron": 3
+            }
+
         for type in types:
             self.resources[type] = 0
 
@@ -53,6 +76,9 @@ class Planet:
             res += self.resources[type]
         return res
 
+    def getMaxResources(self, res):
+        return maxResources(res)
+
     def draw(self, renderer):
         renderer.draw(self.img, self.pos)
 
@@ -61,15 +87,21 @@ class Planet:
 
     def population_growth(self):
         if self.population <= self.resources["Food"]:
-            self.resources["Food"] -= self.population
-            self.population += self.population // 10
+            self.resources["Food"] -= self.population / FOOD_CONSUMPTION
+            self.population += self.population // POPULATION_GROWTH_PER_FOOD
         else:
             self.population = self.resources["Food"]
             self.resources["Food"] = 0
 
+    def produce(self):
+        for type in resourceNames:
+            print("production ", type)
+            cProd = math.floor(self.production[type] * PRODUCTION_PER_PERSON * self.population)
+
+            self.resources[type] = self.resources[type] + cProd
 
     def update(self, dt):
-        if self.timer >= 100:
+        """if self.timer >= 100:
             self.timer = 0
             # planet producing food will eat all of it, eat less or produce more!
             self.population_growth()
@@ -78,7 +110,15 @@ class Planet:
             else:
                 self.resources[self.type] += self.population
         else:
-            self.timer += 1
+            self.timer += 1"""
+
+        self.timer += dt
+
+        if(self.timer >= 1):
+            self.timer = self.timer - 1
+            
+            self.population_growth()
+            self.produce()
 
     def add_resources(self, type, amount):
         self.resources[type] += amount

@@ -12,8 +12,6 @@ import pdb
 pygame.init()
 clock = pygame.time.Clock()
 
-planets = [Planet("Earth", Vec2(0, 0), "Earth", 0.5, 10, True)]
-rockets = [Rocket(planets[0])]
 routes = []
 
 guiElements = []
@@ -47,6 +45,9 @@ guiElements[1].addChild(textObject)
 textObject.setText("This text has been updated with the ^red^power of ~FOOD~")
 
 
+planets = [Planet("Earth", Vec2(0, 0), "Earth", 0.5, 30, True)]
+planets[0].add_resources("Food", 300)
+rockets = [Rocket(planets[0])]
 # Generate planets
 for x in range(-10, 10):
     for y in range(-10, 10):

@@ -8,11 +8,11 @@ TEXT_IMAGE_SIZE = 24
 TEXT_LINE_MARGIN = 3
 
 textObjects = {
-        "FOOD": "Resources/food.png",
-        "IRON": "Resources/iron.png",
-        "IRON_MAX": "Resources/ironMAX.png",
-        "WOOD": "Resources/wood.png",
-        "WOOD_MAX": "Resources/woodMAX.png"
+        "FOOD": pygame.image.load("Resources/food.png"),
+        "IRON": pygame.image.load("Resources/iron.png"),
+        "IRON_MAX": pygame.image.load("Resources/ironMAX.png"),
+        "WOOD": pygame.image.load("Resources/wood.png"),
+        "WOOD_MAX": pygame.image.load("Resources/woodMAX.png")
     }
 
 colors = {

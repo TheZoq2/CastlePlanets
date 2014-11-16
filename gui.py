@@ -45,8 +45,11 @@ class GUIImage(GUIElement):
     def __init__(self, parentPos, pos, imageFile):
         self.image = None
         super().__init__(parentPos, pos)
-
-        self.image = pygame.image.load(imageFile)
+        
+        if(isinstance(imageFile, str)):
+            self.image = pygame.image.load(imageFile)
+        else:
+            self.image = imageFile
 
     def draw(self, renderer):
         super().draw(renderer)
