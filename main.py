@@ -141,7 +141,11 @@ while running:
             planet = clickedPlanet(mouseVec)
             if planet in multiselect:
                 print('Multiselected %s -> %s' % (selection.name, planet.name))
-                routes.append(Traderoute((selection, planet), ('Food', 'Iron')))
+                new_route = Traderoute((selection, planet), ('Food', 'Iron'))
+                routes.append(new_route)
+                rocket = Rocket(selection)
+                rockets.append(rocket)
+                rocket.route= new_route
                 multiselect = []
             elif planet != None:
                 #if planet in [x.path[0] for x in routes] + [x.path[1] for x in routes] or planet == planets[0]:
