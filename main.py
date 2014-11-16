@@ -149,10 +149,10 @@ while running:
                 rocket.route= new_route
                 multiselect = []
             elif planet != None:
-                #if planet in [x.path[0] for x in routes] + [x.path[1] for x in routes] or planet == planets[0]:
-                selection = planet
-                scale = Vec2(256, 256) * selection.size
-                glow_scaled = pygame.transform.scale(glow, (int(scale.x) + 30, int(scale.y) + 30))
+                if planet in [x.path[0] for x in routes] + [x.path[1] for x in routes] or planet == planets[0]:
+                    selection = planet
+                    scale = Vec2(256, 256) * selection.size
+                    glow_scaled = pygame.transform.scale(glow, (int(scale.x) + 30, int(scale.y) + 30))
             else:
                 dragging = True
                 multiselect = []
