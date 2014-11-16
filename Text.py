@@ -120,6 +120,9 @@ class TextObject(GUIElement):
                     self.addWord(newObject)
                 else:
                     print("Special text thingy: ", word, " not recogniced")
+            elif word == "/n":
+                cLineWidth = 0
+                cLineStart = cLineStart + FONT_SIZE
             else:
                 wordColor = (255,255,255)
                 #Checking if the word should have a specific color
