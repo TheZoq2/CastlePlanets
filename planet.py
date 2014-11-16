@@ -109,7 +109,10 @@ class Planet:
         for type in resourceNames:
             cProd = self.getResourceProduction(type)
 
-            self.resources[type] = self.resources[type] + cProd
+            if self.resources[type] + cProd < self.maxResources[type]:
+                self.resources[type] = self.resources[type] + cProd
+            else:
+                self.resources[type] = self.maxResources[type]
 
     def update(self, dt):
         """if self.timer >= 100:
