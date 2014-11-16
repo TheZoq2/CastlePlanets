@@ -171,4 +171,7 @@ class TextObject(GUIElement):
         for word in self.words:
             word.draw(renderer)
         
+    def absDraw(self, renderer):
+        for word in self.words:
+            renderer.draw(word.rendered, word.truePos)
 

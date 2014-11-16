@@ -1,5 +1,6 @@
 import pygame, random, math
 from Vec2 import *
+from Text import *
 
 FOOD_CONSUMPTION = 5
 PRODUCTION_PER_PERSON = 0.05
@@ -30,9 +31,7 @@ class Planet:
         self.type = type
         self.size = size
         self.population = population
-        self.popFloat = population #Float value to allow pop to grow every other frame
         self.ownage = ownage
-            
 
         if self.name == None:
             self.name = random.choice(names)
@@ -42,6 +41,8 @@ class Planet:
             self.size = random.uniform(0.1, 0.7)
         if self.ownage == None:
             self.ownage = False
+
+        self.nametext = TextObject(Vec2(0,0), pos + Vec2(0, 140) * self.size, Vec2(100, 100), self.name)
 
         self.resources = {
                 "Food": 0,
@@ -86,6 +87,7 @@ class Planet:
 
     def draw(self, renderer):
         renderer.draw(self.img, self.pos)
+        self.nametext.absDraw(renderer)
         if self.ownage:
             scale = self.size * 128
             castleVec = Vec2(scale * math.sin(math.radians(self.castleAngle)), scale * math.cos(math.radians(self.castleAngle)))
