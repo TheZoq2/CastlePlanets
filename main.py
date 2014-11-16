@@ -162,14 +162,15 @@ while running:
         if event.type == MOUSEBUTTONUP and event.button == 1:
             dragging = False
 
+    renderer.move_camera(Vec2(xscroll, yscroll) * dt * cameraSpeed)
     if multiselect != []:
         for planet in multiselect:
             if ((selection, planet) in [(x.path[1], x.path[0]) for x in routes]) or ((selection, planet) in [(x.path[0], x.path[1]) for x in routes]):
                 multiselect.remove(planet)
             else:
                 scale = Vec2(256, 256) * planet.size
-                glow_scaled = pygame.transform.scale(multiglow, (int(scale.x) + 30, int(scale.y) + 30))
-                renderer.draw(glow_scaled, planet.get_coords())
+                multi_glow_scaled = pygame.transform.scale(multiglow, (int(scale.x) + 30, int(scale.y) + 30))
+                renderer.draw(multi_glow_scaled, planet.get_coords())
 
     # Update objects
     for rocket in rockets:
@@ -180,9 +181,6 @@ while running:
 
     if selection != None:
         update_dashboard(selection)
-
-
-    renderer.move_camera(Vec2(xscroll, yscroll) * dt * cameraSpeed)
 
     # Draw shit
     for traderoute in routes:
