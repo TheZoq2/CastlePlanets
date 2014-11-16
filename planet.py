@@ -80,6 +80,7 @@ class Planet:
     def add_resources(self, type, amount):
         self.resources[type] += amount
 
+
     def get_resources(self, type, amount):
         if self.resources[type] >= amount:
             self.resources[type] -= amount
