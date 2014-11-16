@@ -22,8 +22,9 @@ class Renderer:
             pos -= self.camera
             pos += Vec2((SCREEN_WIDTH - 300) / 2, (SCREEN_HEIGHT - 200) / 2)
 
-            v1 = pos + Vec2(img.get_width(), img.get_height())
-            v2 = Vec2(SCREEN_WIDTH - 300, SCREEN_HEIGHT - 200)
+            img_size = Vec2(img.get_width(), img.get_height())
+            v1 = pos + img_size
+            v2 = Vec2(SCREEN_WIDTH - 300, SCREEN_HEIGHT - 200) + img_size / 2
             if v1.x < 0 or v1.y < 0 or pos.x > v2.x or pos.y > v2.y:
                 return
             pos -= Vec2(img.get_width() / 2, img.get_height() / 2)
