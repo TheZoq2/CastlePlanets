@@ -264,7 +264,8 @@ while running:
 
     resAmnt = all_current_resources(planets)
     resourceText.setText("~FOOD~ %i ~WOOD_MAX~ %i ~IRON_MAX~ %i ~POP~ %i ^green^Population ^green^Record: %i" % (resAmnt['Food'], resAmnt['Wood'], resAmnt['Iron'], resAmnt['Population'], population_record))
-
+    if resAmnt['Population'] == 0:
+        gameLog('GAME OVER')
     renderer.move_camera(Vec2(xscroll, yscroll) * dt * cameraSpeed)
     if multiselect != []:
         for planet in multiselect:
