@@ -125,7 +125,7 @@ def payToWin(source_planet, target_planet, type, cost, population, food):
         return True
     else:
         return False
-    
+
 
 def clickedPlanet(mouseVec):
     for planet in planets:
@@ -149,11 +149,11 @@ def clickedTradeRoute(mouseVec):
             lowestRoute = route
             lowestDist = dist.getLen()
 
-    
+
     if((lowestDist < 64)):
         return lowestRoute
     return None
-        
+
 
 def update_dashboard(selection):
     if(isinstance(selection, Planet)):
@@ -281,7 +281,7 @@ while running:
         selected = False
         if(traderoute == selection):
             selected = True
-        
+
         traderoute.draw(renderer, isSelected=selected)
 
     if selection != None and isinstance(selection, Planet):
