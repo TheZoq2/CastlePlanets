@@ -144,7 +144,7 @@ while running:
             elif event.key == K_a or event.key == K_d:
                 xscroll = 0
 
-        if event.type == MOUSEBUTTONDOWN and event.button == 1:
+        if event.type == MOUSEBUTTONDOWN and event.button == 1 and mouseVec.x < 980 and mouseVec.y < 500:
             planet = clickedPlanet(mouseVec)
             if planet in multiselect:
                 print('Multiselected %s -> %s' % (selection.name, planet.name))
