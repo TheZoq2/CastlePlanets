@@ -120,7 +120,7 @@ while running:
     mouseClicks = pygame.mouse.get_pressed()
 
     for event in pygame.event.get():
-        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+        if event.type == QUIT:# or (event.type == KEYDOWN and event.key == K_ESCAPE):
             running = False
 
         if event.type == KEYDOWN:

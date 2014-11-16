@@ -28,6 +28,7 @@ class Planet:
         self.type = type
         self.size = size
         self.population = population
+        self.popFloat = population #Float value to allow pop to grow every other frame
         self.ownage = ownage
             
 
@@ -88,15 +89,18 @@ class Planet:
     def population_growth(self):
         if self.population <= self.resources["Food"]:
             self.resources["Food"] -= self.population / FOOD_CONSUMPTION
-            self.population += self.population // POPULATION_GROWTH_PER_FOOD
+            self.popFloat += self.popFloat / POPULATION_GROWTH_PER_FOOD
+            self.population = math.floor(self.popFloat)
         else:
             self.population = self.resources["Food"]
             self.resources["Food"] = 0
+    
+    def getResourceProduction(self, resource):
+        return math.floor(self.production[resource] * PRODUCTION_PER_PERSON * self.population)
 
     def produce(self):
         for type in resourceNames:
-            print("production ", type)
-            cProd = math.floor(self.production[type] * PRODUCTION_PER_PERSON * self.population)
+            cProd = self.getResourceProduction(type)
 
             self.resources[type] = self.resources[type] + cProd
 
