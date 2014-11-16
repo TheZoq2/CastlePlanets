@@ -8,7 +8,7 @@ POPULATION_GROWTH_PER_FOOD = 40
 PlanetImgs = []
 for i in range(5):
     PlanetImgs += [pygame.image.load("Planets/planet" + str(i+1) + ".png")]
-PlanetImgs += [pygame.image.load("Planets/Earth.png")]
+PlanetImgs += [pygame.image.load("Planets/earth.png")]
 
 print(PlanetImgs)
 
