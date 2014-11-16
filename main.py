@@ -23,7 +23,7 @@ guiElements.append(Window(Vec2(0, 0), Vec2(980, 0), "GUI/sidebar.png"))
 add_traderoute = Button(Vec2(100, 300), Vec2(200, 30), ("trade_route_button.png", "trade_route_button.png", "trade_route_button.png"))
 guiElements[0].addChild(add_traderoute)
 
-planet_name = TextObject(Vec2(100,200), Vec2(10, 10), Vec2(100, 20), "Planet")
+planet_name = TextObject(Vec2(100,200), Vec2(100, 30), Vec2(100, 20), "Planet")
 planet_population = TextObject(Vec2(100, 200), Vec2(100, 75), Vec2(200, 200), "P: -")
 planet_food = TextObject(Vec2(100, 200), Vec2(100, 100), Vec2(200, 200), "~FOOD~ -")
 planet_wood = TextObject(Vec2(100, 200), Vec2(100, 125), Vec2(200, 200), "~WOOD~ -")
@@ -150,15 +150,35 @@ def update_dashboard(selection):
         planet_wood.setText("~WOOD~ %i" % selection.resources['Wood'])
         planet_iron.setText("~IRON~ %i" % selection.resources['Iron'])
 
-def all_planet_resources(planets):
+def all_current_resources(planets):
+    res = ['Food', 'Wood', 'Iron', 'Population']
     total_resources = {'Food': 0,
                        'Wood': 0,
-                       'Iron': 0}
+                       'Iron': 0,
+                       'Population': 0}
+
     for planet in planets:
-        total_resources['Food'] += planet.resources['Food']
-        total_resources['Wood'] += planet.resources['Wood']
-        total_resources['Iron'] += planet.resources['Iron']
+        if planet.ownage == True:
+            for resource in res:
+                total_resources[resource] += planet.resources[resource]
+            total_resources['Population'] += planet.population
+
     return total_resources
+
+def all_max_resources(planets):
+    res = ['Food', 'Wood', 'Iron', 'Population']
+    max_resources = {'Food': 0,
+                     'Wood': 0,
+                     'Iron': 0,
+                     'Population': 0}
+
+    for planet in planets:
+        if planet.ownage == True:
+            for resource in res:
+                max_resources[resource] += planet.maxResources[resource]
+
+    return max_resources
+
 
 dragging = False
 while running:
