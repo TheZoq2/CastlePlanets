@@ -125,7 +125,7 @@ class Planet:
             self.resources[type] += amount
             return amount
         else:
-            res = self.maxResources - self.resources[type]
+            res = self.maxResources[type] - self.resources[type]
             self.resources[type] = self.maxResources[type]
             return res
 
