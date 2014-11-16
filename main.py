@@ -231,6 +231,11 @@ while running:
             elif event.key == K_a or event.key == K_d:
                 xscroll = 0
 
+        if event.type == MOUSEBUTTONDOWN:
+            clicks = [0,0,0]
+            clicks[event.button - 1] = True
+            for element in guiElements:
+                element.update(mouseVec, clicks)
         if event.type == MOUSEBUTTONDOWN and event.button == 1 and mouseVec.x < 980 and mouseVec.y < 500:
             planet = clickedPlanet(mouseVec)
             route = clickedTradeRoute(mouseVec)
