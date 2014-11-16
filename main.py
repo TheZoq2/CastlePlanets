@@ -191,7 +191,7 @@ def all_max_resources(planets):
 
     return max_resources
 
-
+population_record = 0
 dragging = False
 while running:
     renderer.clear()
@@ -266,6 +266,11 @@ while running:
                 multi_glow_scaled = pygame.transform.scale(multiglow, (int(scale.x) + 30, int(scale.y) + 30))
                 renderer.draw(multi_glow_scaled, planet.get_coords())
 
+    current_resources = all_current_resources(planets)
+    current_population = current_resources['Population']
+    if current_population > population_record:
+        population_record = current_population
+
     # Update objects
     for rocket in rockets:
         rocket.update(dt)
@@ -298,6 +303,7 @@ while running:
     for element in guiElements:
         element.update(mouseVec, mouseClicks)
         element.draw(renderer)
+
 
     pygame.display.flip()
     dt = clock.tick(framerate) / 1000
