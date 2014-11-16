@@ -31,10 +31,10 @@ class Renderer:
 
             self.screen.blit(img, (pos.x, pos.y))
 
-    def line(self, start, end):
+    def line(self, start, end, color=(255,255,255)):
         start -= self.camera
         end -= self.camera
         start += Vec2((SCREEN_WIDTH - 300) / 2, (SCREEN_HEIGHT - 200) / 2)
         end += Vec2((SCREEN_WIDTH - 300) / 2, (SCREEN_HEIGHT - 200) / 2)
-        pygame.draw.line(self.screen, (255, 255, 255), (start.x, start.y), (end.x, end.y), 3)
+        pygame.draw.line(self.screen, color, (start.x, start.y), (end.x, end.y), 3)
 

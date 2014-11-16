@@ -123,12 +123,32 @@ def clickedPlanet(mouseVec):
             return planet
     return None
 
+def clickedTradeRoute(mouseVec):
+    lowestDist = float("inf")
+    lowestRoute = None
+    for route in routes:
+        #dist = (route.getCenter() - renderer.camera - mouseVec).getLen()
+        routeScreenPos = route.getCenter() - renderer.camera
+        routeScreenPos += Vec2((SCREEN_WIDTH - 300) / 2, (SCREEN_HEIGHT - 200) / 2)
+        dist = mouseVec - routeScreenPos
+
+        if(dist.getLen() < lowestDist):
+            lowestRoute = route
+            lowestDist = dist.getLen()
+
+    
+    if((lowestDist < 64)):
+        return lowestRoute
+    return None
+        
+
 def update_dashboard(selection):
-    planet_name.setText(selection.name)
-    planet_population.setText("P: %i" % selection.population)
-    planet_food.setText("~FOOD~ %i" % selection.resources['Food'])
-    planet_wood.setText("~WOOD~ %i" % selection.resources['Wood'])
-    planet_iron.setText("~IRON~ %i" % selection.resources['Iron'])
+    if(isinstance(selection, Planet)):
+        planet_name.setText(selection.name)
+        planet_population.setText("P: %i" % selection.population)
+        planet_food.setText("~FOOD~ %i" % selection.resources['Food'])
+        planet_wood.setText("~WOOD~ %i" % selection.resources['Wood'])
+        planet_iron.setText("~IRON~ %i" % selection.resources['Iron'])
 
 def all_planet_resources(planets):
     total_resources = {'Food': 0,
@@ -177,6 +197,8 @@ while running:
 
         if event.type == MOUSEBUTTONDOWN and event.button == 1 and mouseVec.x < 980 and mouseVec.y < 500:
             planet = clickedPlanet(mouseVec)
+            route = clickedTradeRoute(mouseVec)
+
             if planet in multiselect and payToWin(selection, planet, 'Iron', 100, 10, 20):
                 print('Multiselected %s -> %s' % (selection.name, planet.name))
                 new_route = Traderoute((selection, planet), ('Food', 'Iron'))
@@ -190,6 +212,8 @@ while running:
                     selection = planet
                     scale = Vec2(256, 256) * selection.size
                     glow_scaled = pygame.transform.scale(glow, (int(scale.x) + 30, int(scale.y) + 30))
+            elif route != None:
+                selection = route
             else:
                 dragging = True
                 multiselect = []
@@ -221,7 +245,7 @@ while running:
     for traderoute in routes:
         traderoute.draw(renderer)
 
-    if selection != None:
+    if selection != None and isinstance(selection, Planet):
         renderer.draw(glow_scaled, selection.get_coords())
 
     for planet in planets:
