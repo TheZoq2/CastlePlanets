@@ -28,7 +28,7 @@ class GUIElement:
 
     def setPos(self, pos):
         self.pos = pos
-        calcTruePos()
+        self.calcTruePos()
 
     def draw(self, renderer):
         pass

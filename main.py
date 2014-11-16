@@ -38,6 +38,52 @@ guiElements[0].addChild(planet_food)
 guiElements[0].addChild(planet_wood)
 guiElements[0].addChild(planet_iron)
 
+planetWindow = guiElements[0]
+tradeWindow = Window(Vec2(0,0), Vec2(10000,500), "GUI/bottombar.png") 
+guiElements.append(tradeWindow)
+
+tradePlanetNames = [
+            TextObject(Vec2(100,200), Vec2(100, 30), Vec2(200, 200), "Planet"),
+            TextObject(Vec2(100,200), Vec2(500, 30), Vec2(200, 200), "Planet")
+        ]
+
+tradeTransferText = [
+            TextObject(Vec2(100, 200), Vec2(300, 40), Vec2(200, 200), "Transfering"),
+            TextObject(Vec2(100, 200), Vec2(300, 60), Vec2(200, 200), "Transfering")
+        ]
+
+tradeResourceButtons = [
+        Button(Vec2(0, 0), Vec2(100, 50), ("Resources/food.png", "Resources/food.png", "Resources/food.png")),
+        Button(Vec2(0, 0), Vec2(100, 80), ("Resources/wood.png", "Resources/wood.png", "Resources/wood.png")),
+        Button(Vec2(0, 0), Vec2(100, 100), ("Resources/iron.png", "Resources/iron.png", "Resources/iron.png")),
+
+        Button(Vec2(0, 0), Vec2(500, 50), ("Resources/food.png", "Resources/food.png", "Resources/food.png")),
+        Button(Vec2(0, 0), Vec2(500, 80), ("Resources/wood.png", "Resources/wood.png", "Resources/wood.png")),
+        Button(Vec2(0, 0), Vec2(500, 100), ("Resources/iron.png", "Resources/iron.png", "Resources/iron.png"))
+        ]
+
+tradeResourceButtons[0].setOnClick(lambda: setShipCargo(0, "Food"))
+tradeResourceButtons[1].setOnClick(lambda: setShipCargo(0, "Wood"))
+tradeResourceButtons[2].setOnClick(lambda: setShipCargo(0, "Iron"))
+tradeResourceButtons[3].setOnClick(lambda: setShipCargo(1, "Food"))
+tradeResourceButtons[4].setOnClick(lambda: setShipCargo(1, "Wood"))
+tradeResourceButtons[5].setOnClick(lambda: setShipCargo(1, "Iron"))
+
+for i in tradeTransferText:
+    tradeWindow.addChild(i)
+
+for i in tradePlanetNames:
+    tradeWindow.addChild(i)
+
+for i in tradeResourceButtons:
+    tradeWindow.addChild(i)
+
+RESOURCE_TO_IMAGE = {
+            "Food": "~FOOD~",
+            "Wood": "~WOOD~",
+            "Iron": "~IRON~"
+        }
+
 #guiElements[1].addChild(Button(Vec2(100, 300), Vec2(100, 10), ("planet.png", "testClick.png", "testHover.png")))
 #guiElements[0].addChild(GUIImage(Vec2(100, 300), Vec2(150, 10), "testHover.png"))
 #guiElements[0].addChild(GUIImage(Vec2(200, 100), Vec2(200, 10), "Hello world"))
@@ -51,6 +97,7 @@ logText = TextObject(Vec2(100, 100), Vec2(30, 50), Vec2(250, 960), "Game Log")
 guiElements[1].addChild(logText)
 
 planets = [Planet("Earth", Vec2(0, 0), "Earth", 0.5, 30, True)]
+selection = planets[0]
 planets[0].add_resources("Food", 300)
 #rockets = [Rocket(planets[0])]
 rockets = []
@@ -103,6 +150,24 @@ def addRocket():
         rocket = Rocket(selection.path[0])
         rocket.route = selection
         rockets.append(rocket)
+
+def setShipCargo(ID, cargo):
+    if(isinstance(selection, Traderoute)):
+        tempCargo = selection.cargo
+        
+        newCargo = None
+        if(ID == 0):
+            newCargo = (cargo, tempCargo[1])
+        if(ID == 1):
+            newCargo = (tempCargo[0], cargo)
+        selection.cargo = newCargo
+        #selection.cargo[ID] = cargo[ID]
+
+
+def getTradeCargo(ID):
+    if(isinstance(selection, Traderoute)):
+        return selection.cargo[ID]
+
 
 add_traderoute.setOnClick(addTradeRoute)
 add_rocket.setOnClick(addRocket)
@@ -161,11 +226,34 @@ def clickedTradeRoute(mouseVec):
 
 def update_dashboard(selection):
     if(isinstance(selection, Planet)):
+        tradeWindow.setPos(Vec2(1000, 10500))
+        planetWindow.setPos(Vec2(0, 500))
+
         planet_name.setText(selection.name)
         planet_population.setText("~POP~ %i" % selection.population)
         planet_food.setText("~FOOD~ %i" % selection.resources['Food'])
         planet_wood.setText("~WOOD~ %i" % selection.resources['Wood'])
         planet_iron.setText("~IRON~ %i" % selection.resources['Iron'])
+    elif isinstance(selection, Traderoute):
+        tradeWindow.setPos(Vec2(0, 500))
+        planetWindow.setPos(Vec2(10000, 10000))
+        #Getting the info from the path
+        resType = selection.cargo
+
+        planets = selection.path
+        
+        tradePlanetNames[0].setText(planets[0].name)
+        tradePlanetNames[1].setText(planets[1].name)
+        #abcd
+        
+        tradeTransferText[0].setText(">>>> " + RESOURCE_TO_IMAGE[selection.cargo[0]])
+        tradeTransferText[1].setText("<<<< " + RESOURCE_TO_IMAGE[selection.cargo[1]])
+        
+
+        
+        
+
+        
 
 def all_current_resources(planets):
     res = ['Food', 'Wood', 'Iron']
