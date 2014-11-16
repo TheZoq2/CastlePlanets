@@ -9,7 +9,11 @@ class Traderoute:
 
     def draw(self, renderer):
         for i in range(len(self.path) - 1):
-            renderer.line(self.path[i].get_coords(), self.path[i+1].get_coords())
+            diff = self.path[i+1].get_coords() - self.path[i].get_coords()
+            seg_start = 0
+            while seg_start < diff.getLen():
+                renderer.line(diff.normalized() * seg_start, diff.normalized() * (seg_start + 15))
+                seg_start += 25
 
     def routable_planets(source_planet, planets):
         close_planets = []
