@@ -2,7 +2,7 @@ import pygame, random, math
 from Vec2 import *
 
 FOOD_CONSUMPTION = 5
-PRODUCTION_PER_PERSON = 0.05
+PRODUCTION_PER_PERSON = 0.1
 POPULATION_GROWTH_PER_FOOD = 200
 
 PlanetImgs = []
