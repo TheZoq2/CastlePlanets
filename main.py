@@ -47,7 +47,9 @@ textObject.setText("This text has been updated with the ^red^power of ~FOOD~")
 
 planets = [Planet("Earth", Vec2(0, 0), "Earth", 0.5, 30, True)]
 planets[0].add_resources("Food", 300)
-rockets = [Rocket(planets[0])]
+#rockets = [Rocket(planets[0])]
+rockets = []
+
 # Generate planets
 for x in range(-10, 10):
     for y in range(-10, 10):
@@ -56,10 +58,10 @@ for x in range(-10, 10):
             planet = Planet(None, Vec2(x, y) * 300 + offset, None, None, 0, None)
             planets.append(planet)
 
-            if abs(x) == 1 and abs(y) == 1: # Create a trade route to a planet close to earth
-                routes.append(Traderoute((planets[0], planet), ('Food', 'Iron')))
+            #if abs(x) == 1 and abs(y) == 1: # Create a trade route to a planet close to earth
+            #    routes.append(Traderoute((planets[0], planet), ('Food', 'Iron')))
 
-rockets[0].route = routes[0]
+#rockets[0].route = routes[0]
 
 mousePos = (0, 0)
 mouseVec = Vec2(0,0)
