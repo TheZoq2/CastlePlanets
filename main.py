@@ -114,6 +114,8 @@ while running:
     mousePos = pygame.mouse.get_pos()
     mouseVec = Vec2(mousePos)
     mouseRel = Vec2(pygame.mouse.get_rel())
+    if dragging:
+        renderer.move_camera(mouseRel * -1)
 
     mouseClicks = pygame.mouse.get_pressed()
 
@@ -156,9 +158,6 @@ while running:
             else:
                 dragging = True
                 multiselect = []
-
-        if event.type == MOUSEMOTION and dragging:
-            renderer.move_camera(mouseRel * -0.25)
 
         if event.type == MOUSEBUTTONUP and event.button == 1:
             dragging = False
