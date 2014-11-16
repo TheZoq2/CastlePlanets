@@ -12,7 +12,8 @@ textObjects = {
         "IRON": pygame.image.load("Resources/iron.png"),
         "IRON_MAX": pygame.image.load("Resources/ironMAX.png"),
         "WOOD": pygame.image.load("Resources/wood.png"),
-        "WOOD_MAX": pygame.image.load("Resources/woodMAX.png")
+        "WOOD_MAX": pygame.image.load("Resources/woodMAX.png"),
+        "POP": pygame.image.load("Resources/house.png")
     }
 
 colors = {
