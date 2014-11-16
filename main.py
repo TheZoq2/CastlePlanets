@@ -98,7 +98,7 @@ guiElements[1].addChild(logText)
 
 planets = [Planet("Earth", Vec2(0, 0), "Earth", 0.5, 30, True)]
 selection = planets[0]
-planets[0].add_resources("Food", 300)
+planets[0].add_resources("Food", 1000)
 #rockets = [Rocket(planets[0])]
 rockets = []
 
