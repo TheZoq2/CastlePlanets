@@ -182,9 +182,9 @@ def payToWin(source_planet, target_planet, type, cost, population, food):
         if not target_planet.ownage:
             print('undiscovered ground!')
             source_planet.population -= population
-            source_planet.popFloat -= population
+            # source_planet.popFloat -= population
             target_planet.population = population
-            target_planet.popFloat = population
+            # target_planet.popFloat = population
 
             source_planet.resources['Food'] -= food
             target_planet.resources['Food'] += food
@@ -321,31 +321,38 @@ while running:
 
         if event.type == MOUSEBUTTONDOWN:
             clicks = [0,0,0]
-            clicks[event.button - 1] = True
+            try:
+                clicks[event.button - 1] = True
+            except Exception:
+                print("Scroll is kind of broken")
             for element in guiElements:
                 element.update(mouseVec, clicks)
         if event.type == MOUSEBUTTONDOWN and event.button == 1 and mouseVec.x < 980 and mouseVec.y < 500:
-            planet = clickedPlanet(mouseVec)
-            route = clickedTradeRoute(mouseVec)
+            try:
+                planet = clickedPlanet(mouseVec)
+                route = clickedTradeRoute(mouseVec)
 
-            if planet in multiselect and payToWin(selection, planet, 'Iron', 100, 10, 20):
-                print('Multiselected %s -> %s' % (selection.name, planet.name))
-                new_route = Traderoute((selection, planet), ('Food', 'Iron'))
-                routes.append(new_route)
-                rocket = Rocket(selection)
-                rockets.append(rocket)
-                rocket.route= new_route
-                multiselect = []
-            elif planet != None:
-                if planet in [x.path[0] for x in routes] + [x.path[1] for x in routes] or planet == planets[0]:
-                    selection = planet
-                    scale = Vec2(256, 256) * selection.size
-                    glow_scaled = pygame.transform.scale(glow, (int(scale.x) + 30, int(scale.y) + 30))
-            elif route != None:
-                selection = route
-            else:
-                dragging = True
-                multiselect = []
+                if planet in multiselect and payToWin(selection, planet, 'Iron', 100, 10, 20):
+                    print('Multiselected %s -> %s' % (selection.name, planet.name))
+                    new_route = Traderoute((selection, planet), ('Food', 'Iron'))
+                    routes.append(new_route)
+                    rocket = Rocket(selection)
+                    rockets.append(rocket)
+                    rocket.route= new_route
+                    multiselect = []
+                elif planet != None:
+                    if planet in [x.path[0] for x in routes] + [x.path[1] for x in routes] or planet == planets[0]:
+                        selection = planet
+                        scale = Vec2(256, 256) * selection.size
+                        glow_scaled = pygame.transform.scale(glow, (int(scale.x) + 30, int(scale.y) + 30))
+                elif route != None:
+                    selection = route
+                else:
+                    dragging = True
+                    multiselect = []
+            except Exception:
+                print("Hmmmm, something went wrong")
+
 
         if event.type == MOUSEBUTTONUP and event.button == 1:
             dragging = False
